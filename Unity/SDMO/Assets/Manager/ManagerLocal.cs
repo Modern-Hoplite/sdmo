@@ -6,10 +6,15 @@ using Photon;
 public class ManagerLocal : PunBehaviour
 {
 	public static ManagerLocal i;
+	public static Mecha mecha;
 
 	public void Awake()
 	{
 		i = this;
+
+		if (PhotonNetwork.isMasterClient) {
+			PhotonNetwork.InstantiateSceneObject ("manager-shared", Vector3.zero, Quaternion.identity, 0, null);
+		}
 	}
 
 	public void Start()
@@ -17,7 +22,7 @@ public class ManagerLocal : PunBehaviour
 		Transform spawnPoint = ManagerLevel.i.spawnPoints[PhotonNetwork.player.ID % ManagerLevel.i.spawnPoints.Length];
 
 		GameObject go = PhotonNetwork.Instantiate ("mecha", spawnPoint.position, spawnPoint.rotation, 0);
-
+		mecha = go.GetComponent<Mecha> ();
 	}
 
 	public void OnGUI()
@@ -29,6 +34,6 @@ public class ManagerLocal : PunBehaviour
 			i++;
 		}
 
-		GUI.Box (new Rect(Screen.width-150, 0, 150, 50), "Change colors using\nup and down");
+		GUI.Box (new Rect(Screen.width-150, 0, 150, 50), "Arrow Keys to move\nSpace to shoot");
 	}
 }

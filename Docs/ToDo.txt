@@ -1,0 +1,5 @@
+
+- Complete the UnitTransform class
+- Make a list of the skills available so we can determine all the conditions
+- Make a list of units
+- Get the math behind the calculations

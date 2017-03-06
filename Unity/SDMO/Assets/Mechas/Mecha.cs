@@ -3,44 +3,63 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 
+/*
+ * 
+ * 
+ * 
+ */
+[RequireComponent(typeof(PhotonView))]
 public class Mecha : PunBehaviour
 {
 	public Unit unit;
-
-	private int tempColorID = 0;
-	public GameObject[] tempColors;
+	public MechaSub sub;
 
 	public void Awake()
 	{
-		unit = new Unit (1, "Gundam");
+		unit = UnitList.GetUnit (1);
+
+		GameObject go = PhotonNetwork.Instantiate ("units/" + unit.GetID (), transform.position, Quaternion.identity, 0);
+		go.transform.parent = transform;
+		sub = go.GetComponent<MechaSub> ();
 	}
 
-	public void Update()
+	public void FixedUpdate()
 	{
 		if (photonView.isMine) {
-			if (Input.GetKeyDown (KeyCode.UpArrow))
-				tempColorID++;
-			else if (Input.GetKeyDown (KeyCode.DownArrow))
-				tempColorID--;
-			tempColorID = Mathf.Clamp (tempColorID, 0, tempColors.Length-1);
+			Vector3 inputMov = Vector3.right * Input.GetAxis ("Horizontal") + Vector3.forward * Input.GetAxis("Vertical");
+
+			transform.position += inputMov * unit.GetSpeed () * Time.fixedDeltaTime;
+
+			if (inputMov.sqrMagnitude > 0f) {
+				transform.LookAt (transform.position + inputMov);
+			}
+
+			if(Input.GetKeyDown(KeyCode.Space))
+			{
+				unit.GetWeapon1 ().UseWeapon (this);
+			}
+
 		} else {
 			
-		}
-
-		int i = 0;
-		foreach (GameObject go in tempColors) {
-			go.SetActive (tempColorID == i);
-			i++;
 		}
 	}
 
 	public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
 	{
 		if (stream.isWriting) {
-			stream.SendNext (tempColorID);
+			stream.SendNext (transform.position);
 		} else {
-			tempColorID = (int) stream.ReceiveNext ();
+			transform.position = (Vector3)stream.ReceiveNext ();
 		}
 	}
 
+	public List<UnitSkill> GetActiveSkills()
+	{
+		List<UnitSkill> activeSkills = new List<UnitSkill> ();
+
+		activeSkills.Add (unit.GetSkill1 ());
+		activeSkills.Add (unit.GetSkill2 ());
+
+		return activeSkills;
+	}
 }
