@@ -18,6 +18,11 @@ public class UnitWeaponGun : UnitWeapon
 		// It will take care of checking for a target
 
 		// The SFX is used to reduce the strain on the network
+		m.sub.firePoint.transform.LookAt(m.aimPoint);
+
+		// TMP
+		//m.sub.firePoint.transform.position = m.aimPoint;
+
 		ManagerShared.i.CreateSFX (0, m.sub.firePoint.position, m.sub.firePoint.rotation);
 	}
 }

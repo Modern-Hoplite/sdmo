@@ -17,6 +17,8 @@ public class ManagerLocal : PunBehaviour
 	{
 		i = this;
 
+		Cursor.lockState = CursorLockMode.Locked;
+
 		if (PhotonNetwork.isMasterClient) {
 			PhotonNetwork.InstantiateSceneObject ("manager-shared", Vector3.zero, Quaternion.identity, 0, null);
 		}

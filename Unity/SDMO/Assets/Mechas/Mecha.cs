@@ -12,6 +12,7 @@ public class Mecha : PunBehaviour
 {
 	public Unit unit;
 	public MechaSub sub;
+	public Vector3 aimDirection = Vector3.forward, aimPoint = Vector3.zero;
 
 	public void Awake()
 	{
@@ -27,22 +28,22 @@ public class Mecha : PunBehaviour
 
 	public void FixedUpdate()
 	{
+		Vector3 aimDirectionHor = (new Vector3 (aimDirection.x, 0f, aimDirection.z)).normalized;
+		transform.LookAt (transform.position + aimDirectionHor);
+
 		if (photonView.isMine) {
-			Vector3 inputMov = Vector3.right * Input.GetAxis ("Horizontal") + Vector3.forward * Input.GetAxis("Vertical");
+			MechaInput.Poll (Time.deltaTime);
 
-			transform.position += inputMov * unit.GetSpeed () * Time.fixedDeltaTime;
+			Vector3 inputMov = Vector3.right * MechaInput.movement.x + Vector3.forward * MechaInput.movement.y;
 
-			if (inputMov.sqrMagnitude > 0f) {
-				transform.LookAt (transform.position + inputMov);
-			}
+			transform.position += transform.TransformDirection(inputMov) * unit.GetSpeed () * Time.fixedDeltaTime;
 
-			if(Input.GetKeyDown(KeyCode.Space))
+			if(MechaInput.shoot)
 			{
 				unit.GetWeapon1 ().UseWeapon (this);
 			}
 
 		} else {
-			
 		}
 	}
 
@@ -50,10 +51,10 @@ public class Mecha : PunBehaviour
 	{
 		if (stream.isWriting) {
 			stream.SendNext (transform.position);
-			stream.SendNext (transform.rotation);
+			stream.SendNext (aimDirection);
 		} else {
 			transform.position = (Vector3)stream.ReceiveNext ();
-			transform.rotation = (Quaternion)stream.ReceiveNext ();
+			aimDirection = (Vector3)stream.ReceiveNext ();
 		}
 	}
 

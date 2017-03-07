@@ -42,7 +42,8 @@ public class ManagerShared : PunBehaviour
 	{
 		object[] data = { sfxID, position, rotation };
 
-		photonView.RPC ("RPCCreateSFX", PhotonTargets.All, data);
+		RPCCreateSFX (sfxID, position, rotation);
+		photonView.RPC ("RPCCreateSFX", PhotonTargets.Others, data);
 	}
 
 	[PunRPC]

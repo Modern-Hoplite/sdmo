@@ -51,6 +51,8 @@
      <Compile Include="Assets\Manager\ManagerShared.cs" />
      <Compile Include="Assets\Mechas\AttackData.cs" />
      <Compile Include="Assets\Mechas\Mecha.cs" />
+     <Compile Include="Assets\Mechas\MechaCam.cs" />
+     <Compile Include="Assets\Mechas\MechaInput.cs" />
      <Compile Include="Assets\Mechas\MechaSub.cs" />
      <Compile Include="Assets\Mechas\Skills\UnitSkillAttackUp.cs" />
      <Compile Include="Assets\Mechas\Unit.cs" />
@@ -139,6 +141,7 @@
      <Compile Include="Assets\PhotonChatApi\ChatUserStatus.cs" />
      <Compile Include="Assets\PhotonChatApi\IChatClientListener.cs" />
      <None Include="Assets\Photon Unity Networking\link.xml" />
+     <None Include="Assets\Graphics\GitSync\Zeta Shader\Zeta Shader Stage 1.shader" />
      <None Include="Assets\Photon Unity Networking\Plugins\Photon3Unity3D.xml" />
      <None Include="Assets\Photon Unity Networking\Plugins\release_history.txt" />
      <None Include="Assets\Photon Unity Networking\readme.txt" />
