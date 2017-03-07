@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Attack Data is a simple structure that contains the properties of a single attack
+ * It reprents a shot or melee attack after it is fired.
+ */
 public class AttackData
 {
 	private int damage;

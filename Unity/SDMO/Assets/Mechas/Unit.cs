@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Unit contains the specific data of an unit
+ * It is made to be easier to handle and lighter than a full MonoBehavior
+ * 
+ * Units should be accessed using UnitList
+ */
 public class Unit
 {
 	private int id = 0;
@@ -40,7 +45,8 @@ public class Unit
 		this.skill1 = skill1;
 		this.skill2 = skill2;
 	}
-		
+
+	// Transform doesn't do anything for most units but it is here for polymorphism
 	public virtual void Transform() {}
 
 	public virtual int GetID() { return id; }

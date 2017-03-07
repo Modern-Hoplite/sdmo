@@ -3,10 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 
+/* Manager Local is not shared between clients
+ * 
+ * It is used by the master client to process the game logic
+ * All of its data is stored in room properties so in case of a disconnect any client can take up the role
+ */
 public class ManagerLocal : PunBehaviour
 {
 	public static ManagerLocal i;
-	public static Mecha mecha;
+	public static Mecha mecha; // Refers to this player's mecha
 
 	public void Awake()
 	{
@@ -27,7 +32,7 @@ public class ManagerLocal : PunBehaviour
 
 	public void OnGUI()
 	{
-		// Temporary
+		// Temporary list of players
 		int i = 0, height = 30;
 		foreach (PhotonPlayer p in PhotonNetwork.playerList) {
 			GUI.Box (new Rect (0, height * i, 200, height), (p.IsMasterClient ? "[M] " : "") + "("+p.ID+") "+p.NickName);

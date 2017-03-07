@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Attack Up
+ * 
+ * Raises the damage of every attack
+ */
 public class UnitSkillAttackUp : UnitSkill
 {
 	private float multiplier = 1.0f;

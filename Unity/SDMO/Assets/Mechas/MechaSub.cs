@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(PhotonView))]
+/* This class contrains info and objects specific to a unit.
+ * It takes care mostly of the graphics.
+ * 
+ */
 public class MechaSub : MonoBehaviour
 {
 	public Transform firePoint;

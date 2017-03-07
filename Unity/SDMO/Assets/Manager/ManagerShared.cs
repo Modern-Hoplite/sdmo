@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 
+/* The manager shared is created by the master client at the beginning of each map
+ * 
+ * It is used mainly to create objects on all clients that don't need a photon view
+ * 
+ */
 [RequireComponent(typeof(PhotonView))]
 public class ManagerShared : PunBehaviour
 {

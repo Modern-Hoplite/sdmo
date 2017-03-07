@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon;
 
-/*
- * 
- * 
- * 
+/* Main entity for each player
+ * Mecha, along with the rest of its game object will process most of the gameplay code related to the current player
+ * It uses an Unit to get its stats and a MechaSub to delegate the unit-specific operations (mostly graphics
  */
 [RequireComponent(typeof(PhotonView))]
 public class Mecha : PunBehaviour
@@ -18,8 +17,11 @@ public class Mecha : PunBehaviour
 	{
 		unit = UnitList.GetUnit (1);
 
-		GameObject go = PhotonNetwork.Instantiate ("units/" + unit.GetID (), transform.position, Quaternion.identity, 0);
+		GameObject go = Instantiate(Resources.Load("units/" + unit.GetID (), typeof(GameObject))) as GameObject;
+		//GameObject go = Instantiate ("units/" + unit.GetID (), transform.position, Quaternion.identity);
 		go.transform.parent = transform;
+		go.transform.localPosition = Vector3.zero;
+		go.transform.localRotation = Quaternion.identity;
 		sub = go.GetComponent<MechaSub> ();
 	}
 
@@ -48,8 +50,10 @@ public class Mecha : PunBehaviour
 	{
 		if (stream.isWriting) {
 			stream.SendNext (transform.position);
+			stream.SendNext (transform.rotation);
 		} else {
 			transform.position = (Vector3)stream.ReceiveNext ();
+			transform.rotation = (Quaternion)stream.ReceiveNext ();
 		}
 	}
 

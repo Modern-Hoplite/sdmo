@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Manager Level contains data specific to the current level
+ */
 public class ManagerLevel : MonoBehaviour
 {
 	public static ManagerLevel i;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* This represents the weapon of a unit
+ * It takes care of everything that happens until the shot is fired
+ */
 public class UnitWeapon
 {
 	private string name = "Gun";

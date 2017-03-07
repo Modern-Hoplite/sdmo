@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* Unit List
+ * Contains some static methods to centralize access to units.
+ * 
+ */
 public class UnitList
 {
 	public static Unit GetUnit(int id)
