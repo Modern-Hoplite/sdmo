@@ -52,6 +52,17 @@ public class MechaCam : MonoBehaviour
 
 	public void OnGUI()
 	{
+		Mecha m = ManagerLocal.mecha;
+		if (!m)
+			return;
+
 		GUI.Box (new Rect (Screen.width / 2 - 10, Screen.height / 2 - 10, 20, 20), "+");
+
+		float enBarMaxLength = Screen.width / 2f, enBarY = Screen.height * 4f / 5f, enBarHeight = 10f;
+		float enBarActualLength = enBarMaxLength * (m.energy / m.energyMax);
+
+		GUI.Box (new Rect ((Screen.width-enBarMaxLength)/2f - 5f, enBarY - 5f, 5f, enBarHeight+10f), "");
+		GUI.Box (new Rect ((Screen.width+enBarMaxLength)/2f, enBarY - 5f, 5f, enBarHeight+10f), "");
+		GUI.Box (new Rect ((Screen.width-enBarActualLength)/2f, enBarY, enBarActualLength, enBarHeight), "");
 	}
 }
