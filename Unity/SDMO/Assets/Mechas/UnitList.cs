@@ -12,7 +12,7 @@ public class UnitList
 	{
 		Unit u = new Unit(id, "Gundam", UnitRank.B);
 		u.SetSkill1 (new UnitSkillAttackUp ());
-		u.SetWeapon1 (new UnitWeaponGun());
+		u.SetWeapon1 (new UnitWeaponHitscan());
 
 		/* Transformable unit template
 		 if (id == 2) {

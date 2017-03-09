@@ -20,8 +20,16 @@ public class MechaSub : MonoBehaviour
 			anim = 0;
 			if (MechaInput.jump)
 				anim = 1;
-			if (MechaInput.boosting)
-				anim = 2;
+			if (MechaInput.boosting) {
+				if (MechaInput.boostingDirection == Vector2.up)
+					anim = 2;
+				else if (MechaInput.boostingDirection == Vector2.down)
+					anim = 3;
+				else if (MechaInput.boostingDirection == Vector2.right)
+					anim = 4;
+				else
+					anim = 5;
+			}
 		} else {
 		}
 

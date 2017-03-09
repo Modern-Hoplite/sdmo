@@ -32,7 +32,7 @@ public class MechaCam : MonoBehaviour
 		transform.position = targetPos;
 
 		RaycastHit hitInfo;
-		if (Physics.Raycast (transform.position, transform.TransformDirection(Vector3.forward), out hitInfo, 500f)) {
+		if (Physics.Raycast (m.transform.position + offsetGlobal, transform.TransformDirection(Vector3.forward), out hitInfo, 500f)) {
 			m.aimPoint = hitInfo.point;
 		} else
 			m.aimPoint = transform.position + aimDir * 500f;

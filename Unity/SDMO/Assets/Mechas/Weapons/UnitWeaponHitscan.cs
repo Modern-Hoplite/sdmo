@@ -4,7 +4,7 @@ using UnityEngine;
 
 /* This class should be used for most ranged weapons
  */
-public class UnitWeaponGun : UnitWeapon
+public class UnitWeaponHitscan : UnitWeapon
 {
 	public override void UseWeapon (Mecha m)
 	{

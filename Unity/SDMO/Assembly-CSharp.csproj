@@ -60,7 +60,11 @@
      <Compile Include="Assets\Mechas\UnitSkill.cs" />
      <Compile Include="Assets\Mechas\UnitTransform.cs" />
      <Compile Include="Assets\Mechas\UnitWeapon.cs" />
-     <Compile Include="Assets\Mechas\Weapons\UnitWeaponGun.cs" />
+     <Compile Include="Assets\Mechas\Weapons\UnitWeaponFlashlight.cs" />
+     <Compile Include="Assets\Mechas\Weapons\UnitWeaponHitscan.cs" />
+     <Compile Include="Assets\Mechas\Weapons\UnitWeaponMelee.cs" />
+     <Compile Include="Assets\Mechas\Weapons\UnitWeaponProjectile.cs" />
+     <Compile Include="Assets\Mechas\Weapons\UnitWeaponSpecial.cs" />
      <Compile Include="Assets\Menu\MainMenu.cs" />
      <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
      <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />

@@ -22,6 +22,9 @@ public class Mecha : PunBehaviour
 	private float vSpeed = 0f;
 	private bool usedEnergyThisFrame = false;
 
+	[HideInInspector]
+	public float backBoostRemainingTime = 0f;
+
 	public void Awake()
 	{
 		unit = UnitList.GetUnit (1);
@@ -47,47 +50,87 @@ public class Mecha : PunBehaviour
 			Vector3 inputMov = Vector3.right * MechaInput.movement.x + Vector3.forward * MechaInput.movement.y;
 			usedEnergyThisFrame = false;
 
-			float verticalMinSpeed = 20f, verticalMaxSpeed = 15f, boostVerticalMinSpeed = 10f;
-			float speedWalk = 8f, speedBoost = 20f;
+			// Movement variables, should be pulled from the units at a later point
+			float verticalMinSpeed = 20f, verticalMaxSpeed = 15f, boostVerticalMinSpeed = 10f,
+				boostSideVerticalMinSpeed = 12f, boostBackVerticalMinSpeed = 6f;
+			float speedWalk = 8f, speedBoost = 20f, speedBoostSide = 18f;
 			float jumpSpeed = 30f, gravity = 45f;
-			float energyJump = 40f, energyBoost = 30f;
+			float energyJump = 40f, energyBoost = 30f, energyBoostSide = 25f;
+			float speedBoostBack = 80f, energyBoostBack = 30f, boostBackTime = 0.4f;
 
+			// Normal movement
 			Vector3 movement = Vector3.zero;
+			movement = transform.TransformDirection (inputMov) * speedWalk;
 
 			verticalMinSpeed = (charC.isGrounded ? 0.0f : -verticalMinSpeed);
 
-			if (MechaInput.boosting && UseEnergy(energyBoost * deltaTime)) {
-				Vector3 boostDir = aimDirectionHor + Vector3.up * Mathf.Max (0.0f, aimDirection.y);
-				boostDir.Normalize ();
-				movement += boostDir * speedBoost;
-				verticalMinSpeed = Mathf.Max (verticalMinSpeed, -boostVerticalMinSpeed);
-			} else {
+			if (MechaInput.boosting) {
+				if (MechaInput.boostingDirection.y > 0f && UseEnergy (energyBoost * deltaTime)) { // FORWARD BOOST
+					Vector3 boostDir = aimDirectionHor + Vector3.up * Mathf.Max (0.0f, aimDirection.y);
+					boostDir.Normalize ();
+					if (MechaInput.jump) {
+						boostDir += Vector3.up;
+						boostDir.Normalize ();
+					}
+					movement = boostDir * speedBoost;
+					verticalMinSpeed = Mathf.Max (verticalMinSpeed, -boostVerticalMinSpeed);
+				} else if (MechaInput.boostingDirection.x != 0f && UseEnergy (energyBoostSide * deltaTime)) { // SIDEWAYS BOOST
+					Vector3 boostDir = transform.TransformDirection(MechaInput.boostingDirection);
+					if (MechaInput.jump) {
+						boostDir += Vector3.up;
+						boostDir.Normalize ();
+					}
+					movement = boostDir * speedBoostSide;
+					verticalMinSpeed = Mathf.Max (verticalMinSpeed, -boostSideVerticalMinSpeed);
+				} else if (MechaInput.boostingDirection.y < 0f && backBoostRemainingTime <= 0f && UseEnergy (energyBoostBack)) { // BACKWARDS BOOST
+					backBoostRemainingTime = boostBackTime;
+				} else
+					MechaInput.boosting = false;
+			} else
 				MechaInput.boosting = false;
-				movement += transform.TransformDirection (inputMov) * speedWalk;
+
+			// Back boost overrides movement for a time
+			if (backBoostRemainingTime > 0f) {
+				backBoostRemainingTime -= deltaTime;
+				verticalMinSpeed = Mathf.Max (verticalMinSpeed, -boostBackVerticalMinSpeed);
+				movement = -aimDirectionHor * speedBoostBack;
+				usedEnergyThisFrame = true;
+
+				if (backBoostRemainingTime > 0f) {
+					MechaInput.boosting = true;
+					MechaInput.boostingDirection = Vector2.down;
+				} else {
+					MechaInput.boosting = false;
+				}
 			}
 
+			// Jumping
 			if (!MechaInput.boosting && MechaInput.jump && UseEnergy (energyJump * deltaTime)) {
 				vSpeed += jumpSpeed * deltaTime;
 			} else {
 				vSpeed -= gravity * deltaTime;
 			}
 
+			// Vertical movement adjust and actual movement
 			vSpeed += movement.y;
 			movement -= Vector3.up * movement.y;
 			vSpeed = Mathf.Clamp (vSpeed, verticalMinSpeed, verticalMaxSpeed);
 			movement += Vector3.up * vSpeed;
 			charC.Move (movement * deltaTime);
 
+			// Energy regen
 			if (!usedEnergyThisFrame)
 				energy += energyRegen * deltaTime;
 			energy = Mathf.Clamp (energy, 0.0f, energyMax);
 
+			// Weapons
 			if(MechaInput.shoot)
 			{
 				unit.GetWeapon1 ().UseWeapon (this);
 			}
 
 		} else {
+			// TODO Interpolation/Extrapolation
 		}
 	}
 

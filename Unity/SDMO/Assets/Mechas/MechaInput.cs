@@ -11,17 +11,19 @@ using UnityEngine;
  */
 public class MechaInput
 {
-	public static Vector2 movement, aim;
+	public static Vector2 movement, aim, boostingDirection;
 	public static bool shoot, jump, boosting;
 
-	private static float timeSinceLastForward = 10f, boostDoubletap = 0.2f;
+	private static float timeSinceMovement = 10f, boostDoubletap = 0.2f, boostDoubletapMaxAngle = 30f;
+	private static Vector2 lastBoostMovement = Vector2.up, oldMovement = Vector2.zero;
 
 	public static void Poll(float deltaTime)
 	{
 		float mouseSensX = -6f, mouseSensY = 4f;
 
-		bool oldMovement = movement.sqrMagnitude > 0f && movement.y > 0f;
+		bool oldMovementNonZero = movement.sqrMagnitude > 0f;
 
+		oldMovement = movement;
 		movement = Vector2.zero;
 		if (Input.GetKey(KeyCode.D))
 			movement += Vector2.right;
@@ -32,14 +34,22 @@ public class MechaInput
 		if (Input.GetKey (KeyCode.S))
 			movement -= Vector2.up;
 
-		bool curMovement = movement.sqrMagnitude > 0f && movement.y > 0f;
+		bool curMovementNonZero = movement.sqrMagnitude > 0f;
 
-		if (oldMovement && !curMovement) {
+		if (oldMovementNonZero && !curMovementNonZero) {
 			boosting = false;
-			timeSinceLastForward = 0f;
+			timeSinceMovement = 0f;
+			lastBoostMovement = oldMovement;
 		}
-		if (!oldMovement && curMovement && timeSinceLastForward <= boostDoubletap)
-			boosting = true;
+		if (!oldMovementNonZero && curMovementNonZero && timeSinceMovement <= boostDoubletap) {
+			if (Vector2.Dot (movement.normalized, lastBoostMovement.normalized) >= Mathf.Cos (boostDoubletapMaxAngle * Mathf.Deg2Rad)) {
+				boosting = true;
+				if (Mathf.Abs (movement.normalized.y) >= 0.5f)
+					boostingDirection = (movement.y > 0f ? Vector2.up : Vector2.down);
+				else
+					boostingDirection = (movement.x > 0f ? Vector2.right : Vector2.left);
+			}
+		}
 
 		aim = Vector2.zero;
 		aim += Vector2.right * Input.GetAxis ("Mouse X") * mouseSensX;
@@ -47,6 +57,8 @@ public class MechaInput
 
 		shoot = Input.GetKeyDown (KeyCode.Mouse0);
 		jump = Input.GetKey (KeyCode.Space);
-		timeSinceLastForward += deltaTime;
+		timeSinceMovement += deltaTime;
+
+		Debug.Log (boostingDirection.ToString());
 	}
 }
