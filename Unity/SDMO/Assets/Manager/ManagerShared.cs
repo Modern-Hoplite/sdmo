@@ -13,8 +13,6 @@ public class ManagerShared : PunBehaviour
 {
 	public static ManagerShared i;
 
-	public GameObject[] sfxPrefab;
-
 	public List<ManagerSharedSFX> sfxAlive = new List<ManagerSharedSFX>();
 
 	public void Awake()
@@ -38,18 +36,18 @@ public class ManagerShared : PunBehaviour
 		}
 	}
 
-	public void CreateSFX(int sfxID, Vector3 position, Quaternion rotation)
+	public void CreateSFX(string sfxName, Vector3 position, Quaternion rotation)
 	{
-		object[] data = { sfxID, position, rotation };
+		object[] data = { sfxName, position, rotation };
 
-		RPCCreateSFX (sfxID, position, rotation);
+		RPCCreateSFX (sfxName, position, rotation);
 		photonView.RPC ("RPCCreateSFX", PhotonTargets.Others, data);
 	}
 
 	[PunRPC]
-	public void RPCCreateSFX(int sfxID, Vector3 position, Quaternion rotation)
+	public void RPCCreateSFX(string sfxName, Vector3 position, Quaternion rotation)
 	{
-		GameObject go = Instantiate (sfxPrefab[sfxID], position, rotation);
+		GameObject go = (GameObject) Instantiate (Resources.Load("sfx/"+sfxName, typeof(GameObject)), position, rotation);
 		ManagerSharedSFX s = new ManagerSharedSFX ();
 		s.transform = go.transform;
 		sfxAlive.Add (s);

@@ -76,10 +76,34 @@ public class Unit
 	public virtual float GetSpeed() { return speed; }
 	public virtual void SetSpeed(float speed) { this.speed = speed; } 
 	public virtual int GetHp() { return hp; }
-	public virtual void SetHp(int hp) { this.hp = hp; } 
+	public virtual void SetHp(int hp) { this.hp = hp; }
+
+	public virtual string GetRessourcePath()
+	{
+		string path = "units/";
+		int unitID = id % 100;
+		int seriesID = (id - unitID) / 100;
+
+		if(seriesID < 100)
+			path += "0";
+		if (seriesID < 10)
+			path += "0";
+		path += seriesID;
+
+		path += "/";
+
+		if(unitID < 10)
+			path += "0";
+		path += unitID;
+
+		return path;
+	}
 }
 
 public enum UnitRank
 {
-	C = 2, B = 3, A = 4, S = 5
+	C = 20, CS = 25,
+	B = 30, BS = 35,
+	A = 40, AS = 45,
+	S = 50, SS = 55
 }

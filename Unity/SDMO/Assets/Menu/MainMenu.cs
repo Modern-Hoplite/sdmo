@@ -6,6 +6,7 @@ using Photon;
 public class MainMenu : PunBehaviour
 {
 	private string playerName = "Undefined";
+	private int unitID = 1;
 
 	public void Awake()
 	{
@@ -14,7 +15,8 @@ public class MainMenu : PunBehaviour
 		PhotonNetwork.ConnectUsingSettings ("alpha1");
 
 		string[] randomNames = { "Amuro Ray", "Char Aznable", "Kamille Bidan", "Judau Ashta", "Ramba Ral", "Garma Zabi", "Heero Yuy", "Bright Noa",
-		"Setsuna F. Seiei", "Lockon Stratos", "Loran Cehack", "Domon Kashu", "Garrod Ran", "Kira Yamato", "Mikazuki Augus", "Bellri Zenam" };
+		"Setsuna F. Seiei", "Lockon Stratos", "Loran Cehack", "Domon Kashu", "Garrod Ran", "Kira Yamato", "Mikazuki Augus", "Bellri Zenam",
+		"Shiro Amada", "Anavel Gato", "Uso Ebin", "Duo Maxwell"};
 		playerName = randomNames[Random.Range(0, randomNames.Length)];
 	}
 

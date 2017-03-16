@@ -12,7 +12,8 @@ using UnityEngine;
 public class MechaInput
 {
 	public static Vector2 movement, aim, boostingDirection;
-	public static bool shoot, jump, boosting;
+	public static bool shoot, jump, boosting, descend,
+	switchWeapon1, switchWeapon2, switchWeapon3;
 
 	private static float timeSinceMovement = 10f, boostDoubletap = 0.2f, boostDoubletapMaxAngle = 30f;
 	private static Vector2 lastBoostMovement = Vector2.up, oldMovement = Vector2.zero;
@@ -50,15 +51,24 @@ public class MechaInput
 					boostingDirection = (movement.x > 0f ? Vector2.right : Vector2.left);
 			}
 		}
+		if (boosting && Vector2.Dot(boostingDirection, movement) < Mathf.Cos(45f * Mathf.Deg2Rad)) {
+			boosting = false;
+		}
 
 		aim = Vector2.zero;
 		aim += Vector2.right * Input.GetAxis ("Mouse X") * mouseSensX;
 		aim += Vector2.up * Input.GetAxis ("Mouse Y") * mouseSensY;
 
 		shoot = Input.GetKeyDown (KeyCode.Mouse0);
-		jump = Input.GetKey (KeyCode.Space);
-		timeSinceMovement += deltaTime;
+		if(Input.GetKeyDown (KeyCode.Space))
+			jump = true;
+		if(Input.GetKeyUp(KeyCode.Space))
+			jump = false;
+		descend = Input.GetKey (KeyCode.V) || Input.GetKey (KeyCode.LeftShift) || Input.GetKey (KeyCode.LeftControl);
+		switchWeapon1 = Input.GetKeyDown (KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Mouse2);
+		switchWeapon2 = Input.GetKeyDown (KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Mouse4);
+		switchWeapon3 = Input.GetKeyDown (KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Mouse3);
 
-		Debug.Log (boostingDirection.ToString());
+		timeSinceMovement += deltaTime;
 	}
 }
