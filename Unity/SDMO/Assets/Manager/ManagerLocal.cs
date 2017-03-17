@@ -37,10 +37,12 @@ public class ManagerLocal : PunBehaviour
 		// Temporary list of players
 		int i = 0, height = 30;
 		foreach (PhotonPlayer p in PhotonNetwork.playerList) {
-			GUI.Box (new Rect (0, height * i, 200, height), (p.IsMasterClient ? "[M] " : "") + "("+p.ID+") "+p.NickName);
+			string s = "";
+			s += (p.IsMasterClient ? "[M] " : "");
+			s += (p == PhotonNetwork.player ? "> " : "");
+			s += "(" + p.ID + ") " + p.NickName;
+			GUI.Box (new Rect (0, height * i, 200, height), s);
 			i++;
 		}
-
-		GUI.Box (new Rect(Screen.width-150, 0, 150, 50), "Arrow Keys to move\nSpace to shoot");
 	}
 }

@@ -31,7 +31,8 @@ public class Mecha : PunBehaviour
 
 	public void Awake()
 	{
-		unit = UnitList.GetUnit (1);
+		int unitID = (int)photonView.owner.CustomProperties ["UnitID"];
+		unit = UnitList.GetUnit (unitID);
 
 		GameObject go = Instantiate(Resources.Load(unit.GetRessourcePath(), typeof(GameObject))) as GameObject;
 		go.transform.parent = transform;
