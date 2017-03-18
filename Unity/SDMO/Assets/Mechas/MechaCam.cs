@@ -15,8 +15,9 @@ public class MechaCam : MonoBehaviour
 	{
 		Mecha m = ManagerLocal.mecha;
 
-		if (!m)
+		if (!m) {
 			return;
+		}
 
 		viewX = (viewX + MechaInput.aim.x) % 360f;
 		viewY = Mathf.Clamp (viewY + MechaInput.aim.y, -80f, 80f);
@@ -36,6 +37,8 @@ public class MechaCam : MonoBehaviour
 			m.aimPoint = hitInfo.point;
 		} else
 			m.aimPoint = transform.position + aimDir * 500f;
+
+		//m.aimPoint = transform.position + aimDir * 500f;
 	}
 
 	public static Vector3 GetAimDir(float x, float y)

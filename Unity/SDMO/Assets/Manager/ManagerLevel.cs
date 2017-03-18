@@ -10,6 +10,8 @@ public class ManagerLevel : MonoBehaviour
 
 	public Transform[] spawnPoints;
 
+	public Transform spectatorCamPoint;
+
 	public void Awake()
 	{
 		i = this;

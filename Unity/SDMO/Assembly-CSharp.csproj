@@ -49,6 +49,7 @@
      <Compile Include="Assets\Manager\ManagerLevel.cs" />
      <Compile Include="Assets\Manager\ManagerLocal.cs" />
      <Compile Include="Assets\Manager\ManagerShared.cs" />
+     <Compile Include="Assets\Manager\RespawnCam.cs" />
      <Compile Include="Assets\Mechas\AttackData.cs" />
      <Compile Include="Assets\Mechas\Mecha.cs" />
      <Compile Include="Assets\Mechas\MechaCam.cs" />
@@ -71,6 +72,8 @@
      <Compile Include="Assets\Mechas\Weapons\UnitWeaponProjectile.cs" />
      <Compile Include="Assets\Mechas\Weapons\UnitWeaponSpecial.cs" />
      <Compile Include="Assets\Menu\MainMenu.cs" />
+     <Compile Include="Assets\Misc\SFX\SFXBase.cs" />
+     <Compile Include="Assets\Misc\SFX\SFXHitscan.cs" />
      <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\CustomTypes.cs" />
      <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Enums.cs" />
      <Compile Include="Assets\Photon Unity Networking\Plugins\PhotonNetwork\Extensions.cs" />

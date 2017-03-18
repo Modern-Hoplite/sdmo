@@ -29,6 +29,8 @@ public class Mecha : PunBehaviour
 	[HideInInspector]
 	public float backBoostRemainingTime = 0f;
 
+	private bool deadRobot = false;
+
 	public void Awake()
 	{
 		int unitID = (int)photonView.owner.CustomProperties ["UnitID"];
@@ -224,13 +226,13 @@ public class Mecha : PunBehaviour
 	public void GetHit(AttackData attackData)
 	{
 		if (photonView.isMine) {
-			Debug.Log ("GOT HIT!!!");
 			foreach (UnitSkill s in GetActiveSkills()) {
 				s.OnDefense (attackData);
 			}
 			hp -= attackData.GetDamage ();
+			if (hp <= 0f)
+				Death ();
 		} else {
-			Debug.Log ("HIT!!!");
 			object[] param = { attackData.GetDamage (), (int)attackData.GetAttackType () };
 			photonView.RPC ("RPCGetHit", photonView.owner, param);
 		}
@@ -242,6 +244,15 @@ public class Mecha : PunBehaviour
 	{
 		AttackData ad = new AttackData (damage, (AttackType)type);
 		GetHit (ad);
+	}
+
+	public void Death()
+	{
+		if (deadRobot)
+			return;
+		deadRobot = true;
+		ManagerLocal.i.MakeRespawnCam ();
+		PhotonNetwork.Destroy (photonView);
 	}
 
 	// Called by UnitWeapon of another client

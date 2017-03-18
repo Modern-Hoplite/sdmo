@@ -51,3 +51,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec2680de558eff14488afc405a5c068e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  respawnCam: {fileID: 1357597920658612, guid: d65f364d9c9fe524999c16351484cd68, type: 2}

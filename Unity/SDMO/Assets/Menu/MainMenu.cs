@@ -12,7 +12,7 @@ public class MainMenu : PunBehaviour
 	{
 		PhotonNetwork.automaticallySyncScene = true;
 		PhotonNetwork.autoJoinLobby = false;
-		PhotonNetwork.ConnectUsingSettings ("alpha1");
+		PhotonNetwork.ConnectUsingSettings (ManagerLocal.versionName);
 
 		string[] randomNames = { "Amuro Ray", "Char Aznable", "Kamille Bidan", "Judau Ashta", "Ramba Ral", "Garma Zabi", "Heero Yuy", "Bright Noa",
 		"Setsuna F. Seiei", "Lockon Stratos", "Loran Cehack", "Domon Kashu", "Garrod Ran", "Kira Yamato", "Mikazuki Augus", "Bellri Zenam",
@@ -22,6 +22,7 @@ public class MainMenu : PunBehaviour
 
 	public void OnGUI()
 	{
+		GUI.Box (new Rect (0, 0, Screen.width, 50), "SD/M/O Version " + ManagerLocal.versionNumber + " - " + ManagerLocal.versionName);
 		if (PhotonNetwork.connectedAndReady) {
 			GUI.Box (new Rect(50, 50, 100, 50), "Name :");
 			playerName = GUI.TextField (new Rect (200, 50, Screen.width - 250, 50), playerName);

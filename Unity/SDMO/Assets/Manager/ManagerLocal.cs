@@ -13,6 +13,11 @@ public class ManagerLocal : PunBehaviour
 	public static ManagerLocal i;
 	public static Mecha mecha; // Refers to this player's mecha
 
+	public static string versionName = "Demo";
+	public static int versionNumber = 1;
+
+	public GameObject respawnCam;
+
 	public void Awake()
 	{
 		i = this;
@@ -25,6 +30,16 @@ public class ManagerLocal : PunBehaviour
 	}
 
 	public void Start()
+	{
+		MakeRespawnCam ();
+	}
+
+	public void MakeRespawnCam()
+	{
+		Instantiate (respawnCam);
+	}
+
+	public void SpawnMe()
 	{
 		Transform spawnPoint = ManagerLevel.i.spawnPoints[PhotonNetwork.player.ID % ManagerLevel.i.spawnPoints.Length];
 
