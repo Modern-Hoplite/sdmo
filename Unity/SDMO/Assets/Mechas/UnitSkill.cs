@@ -10,6 +10,12 @@ using UnityEngine;
 public class UnitSkill
 {
 	public virtual void OnAttack(AttackData attackData) {}
+	public virtual void OnDefense(AttackData attackData) {}
+
+	public virtual string GetName()
+	{
+		return "No Skill";
+	}
 
 	// TODO [...]
 }

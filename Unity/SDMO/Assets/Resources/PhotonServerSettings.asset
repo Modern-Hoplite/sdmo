@@ -39,4 +39,6 @@ MonoBehaviour:
   - RequestForPickupTimes
   - CreateShot
   - RPCCreateSFX
+  - RPCFireWeapon
+  - RPCGetHit
   DisableAutoOpenWizard: 1
