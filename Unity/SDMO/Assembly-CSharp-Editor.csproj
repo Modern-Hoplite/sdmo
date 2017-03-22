@@ -64,6 +64,7 @@
      <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PhotonPlayer\Editor\PlayerRoomIndexingInspector.cs" />
      <Compile Include="Assets\Photon Unity Networking\UtilityScripts\PhotonPlayer\Editor\PunTeamsInspector.cs" />
      <None Include="Assets\Photon Unity Networking\link.xml" />
+     <None Include="Assets\Graphics\GitSync\Zeta Shader\Zeta Shader Stage 1.shader" />
      <None Include="Assets\Photon Unity Networking\Plugins\Photon3Unity3D.xml" />
      <None Include="Assets\Photon Unity Networking\Plugins\release_history.txt" />
      <None Include="Assets\Photon Unity Networking\readme.txt" />

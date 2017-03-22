@@ -14,4 +14,9 @@ public class UnitSkillAttackUp : UnitSkill
 	{
 		attackData.SetDamage ((int)(attackData.GetDamage() * multiplier));
 	}
+
+	public override string GetName ()
+	{
+		return "Attack Up";
+	}
 }

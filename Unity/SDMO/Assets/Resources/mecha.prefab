@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4642256051516864}
   - component: {fileID: 114983757272510548}
   - component: {fileID: 114492835355835522}
+  - component: {fileID: 143360078500694620}
   m_Layer: 0
   m_Name: mecha
   m_TagString: Untagged
@@ -52,7 +53,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 948311f1570bad64198521779ca9f60d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  charC: {fileID: 0}
   sub: {fileID: 0}
+  aimDirection: {x: 0, y: 0, z: 1}
+  aimPoint: {x: 0, y: 0, z: 0}
+  energy: 100
+  energyMax: 100
+  energyRegen: 20
 --- !u!114 &114983757272510548
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -79,3 +86,20 @@ MonoBehaviour:
   instantiationId: -1
   currentMasterID: -1
   isRuntimeInstantiated: 0
+--- !u!143 &143360078500694620
+CharacterController:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1689612949359980}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Height: 2
+  m_Radius: 0.85
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 1, z: 0}
