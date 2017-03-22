@@ -61,6 +61,7 @@
      <Compile Include="Assets\Mechas\Transform\UnitTransformPurge.cs" />
      <Compile Include="Assets\Mechas\Unit.cs" />
      <Compile Include="Assets\Mechas\UnitList.cs" />
+     <Compile Include="Assets\Mechas\UnitParser.cs" />
      <Compile Include="Assets\Mechas\UnitSkill.cs" />
      <Compile Include="Assets\Mechas\UnitWeapon.cs" />
      <Compile Include="Assets\Mechas\Weapons\UnitWeaponBuiltin.cs" />

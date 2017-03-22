@@ -102,8 +102,11 @@ public class Unit
 
 public enum UnitRank
 {
+	D = 10, DS = 15,
 	C = 20, CS = 25,
 	B = 30, BS = 35,
 	A = 40, AS = 45,
-	S = 50, SS = 55
+	S = 50, SS = 55,
+	X = 60, XS = 65,
+	Z = 70, ZX = 75
 }

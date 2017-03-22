@@ -6,7 +6,7 @@ using Photon;
 public class MainMenu : PunBehaviour
 {
 	private string playerName = "Undefined";
-	private int unitID = 1;
+	private int unitID = 0;
 
 	public void Awake()
 	{
@@ -27,8 +27,8 @@ public class MainMenu : PunBehaviour
 			GUI.Box (new Rect(50, 50, 100, 50), "Name :");
 			playerName = GUI.TextField (new Rect (200, 50, Screen.width - 250, 50), playerName);
 
-			int[] ids = { 1 };
-			string[] name = { "Gundam" };
+			int[] ids = { 0 };
+			string[] name = { "Toastron" };
 			//int[] ids = { 1, 2, 3, 4, 5, 6 };
 			//string[] name = { "Gundam", "Zaku II", "Big Zam (Mass Produced)", "Gouf", "Ball", "Box Gundam" };
 			float unitChooseWidth = (Screen.width - 100f) / ids.Length;

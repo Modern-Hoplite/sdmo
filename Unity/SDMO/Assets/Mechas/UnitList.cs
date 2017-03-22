@@ -30,17 +30,22 @@ public class UnitList
 		
 	private static Unit UndefinedUnit(int id)
 	{
-		Unit u = new Unit (id, "Box Gundam (" + id+")", UnitRank.SS);
-		u.SetSkill1 (new UnitSkillAttackUp ());
-		u.SetSkill2 (new UnitSkillAttackUp ());
-		u.SetWeapon1 (new UnitWeaponHitscan ("Box Punch", new AttackData()));
-		u.SetWeapon2 (new UnitWeaponHitscan ("Box Rifle", new AttackData()));
-		u.SetWeapon3 (new UnitWeaponHitscan ("Box Bazooka", new AttackData()));
+		string name = "Toastron" + (id == 0 ? "" : " (" + id + ")");
+		Unit u = new Unit (id, name, UnitRank.B);
+		UnitSkill s1, s2;
+		UnitWeapon w1, w2, w3;
 
-		return u;
+		s1 = new UnitSkillAttackUp ();
+		s2 = new UnitSkillAttackUp ();
+
+		w1 = new UnitWeaponMelee ("Melee", new AttackData());
+		w2 = new UnitWeaponHitscan ("Water Launcher", new AttackData());
+		w3 = new UnitWeaponHitscan ("Microwave", new AttackData());
+
+		return BuildUnit(u,w1,w2,w3,s1,s2);
 	}
 
-	// Gundam 0079
+	// Basic stuff
 	private static Unit List000(int unitID)
 	{
 		int seriesID = 0;
@@ -51,14 +56,14 @@ public class UnitList
 		UnitWeapon weapon1, weapon2, weapon3;
 
 		switch (unitID) {
-		case 1:
+		/*case 1:
 			unit = new Unit (id, "Gundam", UnitRank.B);
 			skill1 = new UnitSkillAttackUp ();
 			skill2 = new UnitSkillAttackUp ();
 			weapon1 = new UnitWeaponMelee ("Beam Saber", new AttackData());
 			weapon2 = new UnitWeaponHitscan ("Beam Rifle", new AttackData());
 			weapon3 = new UnitWeaponBuiltin(new UnitWeaponHitscan ("Vulcan", new AttackData()));
-			break;
+			break;*/
 		default:
 			return UndefinedUnit (id);
 		}
