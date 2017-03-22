@@ -1,19 +1,17 @@
 ﻿<Properties StartupItem="Assembly-CSharp.csproj">
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Mechas\Weapons\UnitWeaponHitscan.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\Mechas\UnitParser.cs">
     <Files>
-      <File FileName="Assets\Mechas\MechaCam.cs" Line="74" Column="62" />
-      <File FileName="Assets\Manager\RespawnCam.cs" Line="1" Column="1" />
+      <File FileName="Assets\Mechas\MechaCam.cs" Line="1" Column="1" />
       <File FileName="Assets\Manager\ManagerLevel.cs" Line="1" Column="1" />
-      <File FileName="Assets\Mechas\Mecha.cs" Line="27" Column="34" />
+      <File FileName="Assets\Mechas\Mecha.cs" Line="1" Column="1" />
       <File FileName="Assets\Manager\ManagerLocal.cs" Line="1" Column="1" />
-      <File FileName="Assets\Misc\SFX\SFXHitscan.cs" Line="1" Column="1" />
       <File FileName="Assets\Misc\SFX\SFXBase.cs" Line="1" Column="1" />
-      <File FileName="Assets\Mechas\UnitParser.cs" Line="130" Column="47" />
-      <File FileName="Assets\Menu\MainMenu.cs" Line="31" Column="31" />
-      <File FileName="Assets\Mechas\Unit.cs" Line="111" Column="17" />
-      <File FileName="Assets\Mechas\UnitList.cs" Line="45" Column="37" />
-      <File FileName="Assets\Mechas\Weapons\UnitWeaponHitscan.cs" Line="18" Column="1" />
+      <File FileName="Assets\Mechas\UnitParser.cs" Line="125" Column="18" />
+      <File FileName="Assets\Menu\MainMenu.cs" Line="1" Column="1" />
+      <File FileName="Assets\Mechas\Unit.cs" Line="1" Column="1" />
+      <File FileName="Assets\Mechas\UnitList.cs" Line="1" Column="1" />
+      <File FileName="Assets\Mechas\Weapons\UnitWeaponHitscan.cs" Line="1" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

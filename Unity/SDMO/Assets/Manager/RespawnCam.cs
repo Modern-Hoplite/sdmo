@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * This is used for the time between dying and respawning.
+ * 
+ */
 public class RespawnCam : MonoBehaviour
 {
 	public float respawnTime = 3f;

@@ -2,6 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/* This SFX extends to the next obstacle it encounters
+ * 
+ */
 public class SFXHitscan : SFXBase
 {
 	// TEnd is going to be moved to the point that was shot

@@ -2,6 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/*
+ * Parses a text file to load a unit
+ * 
+ * Currently incomplete
+ */
 public class UnitParser
 {
 	private int lineNumber = 0;
@@ -58,6 +63,8 @@ public class UnitParser
 			return StandardUnit ();
 		if (line == "TRANSFORM")
 			return Transform ();
+		if (line == "LOAD")
+			return LoadUnit ();
 		ReportError ("ParseUnit : Unit type unknown ("+line+")");
 		return new Unit();
 	}
@@ -109,6 +116,13 @@ public class UnitParser
 			return t;
 		}
 		ReportError ("Transform : Transform type unknown ("+transformType+")", l);
+		return new Unit ();
+	}
+
+	// Loads another unit, useful for expanding upon
+	private Unit LoadUnit()
+	{
+		// Not done yet
 		return new Unit ();
 	}
 
