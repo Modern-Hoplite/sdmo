@@ -11,33 +11,40 @@ public class MechaSub : MonoBehaviour
 	public Mecha m;
 	public Transform[] firePoint1, firePoint2, firePoint3;
 
-	public Transform[] tmpAnim;
-	private int anim;
+	public Animator animSyst;
+
+	private int animID;
+	private AnimationData lastAnim = null;
 
 	public void Update()
 	{
+		if (!m)
+			return;
+
+		AnimationSet s = m.unit.GetAnimationSet ();
+		List<AnimationData> l = s.GetAllAnimations ();
+		AnimationData curAnim = s.currentAnim;
 		if (m.photonView.isMine) {
-			anim = 0;
-			if (MechaInput.jump)
-				anim = 1;
+
+			AnimationData animToPlay = s.stand;
+
 			if (MechaInput.boosting) {
-				if (MechaInput.boostingDirection == Vector2.up)
-					anim = 2;
-				else if (MechaInput.boostingDirection == Vector2.down)
-					anim = 3;
-				else if (MechaInput.boostingDirection == Vector2.right)
-					anim = 4;
-				else
-					anim = 5;
+				animToPlay = s.boostF;
 			}
+
+			s.PlayAnim (animToPlay);
+
+			animID = l.IndexOf(curAnim);
 		} else {
+			curAnim = l [animID];
 		}
 
-		int i = 0;
-		foreach (Transform t in tmpAnim) {
-			t.gameObject.SetActive (i == anim);
-			i++;
+		return; // TEMP To check the internal system
+
+		if (lastAnim != curAnim) {
+			animSyst.Play (curAnim.animNameSystem);
 		}
+		lastAnim = curAnim;
 	}
 
 	public Transform[] GetActiveFirePoints()
@@ -76,11 +83,11 @@ public class MechaSub : MonoBehaviour
 
 	public void PhotonSend(PhotonStream stream, PhotonMessageInfo info)
 	{
-		stream.SendNext (anim);
+		stream.SendNext (animID);
 	}
 
 	public void PhotonRecieve(PhotonStream stream, PhotonMessageInfo info)
 	{
-		anim = (int)stream.ReceiveNext ();
+		animID = (int)stream.ReceiveNext ();
 	}
 }

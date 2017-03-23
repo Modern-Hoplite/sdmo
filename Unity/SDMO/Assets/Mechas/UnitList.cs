@@ -40,7 +40,14 @@ public class UnitList
 
 		w1 = new UnitWeaponMelee ("Melee", new AttackData());
 		w2 = new UnitWeaponHitscan ("Water Launcher", new AttackData());
-		w3 = new UnitWeaponHitscan ("Microwave", new AttackData());
+		w3 = new UnitWeaponHitscan ("Microwave Burst", new AttackData());
+
+		AnimationData stand = new AnimationData ("stand", "Stand", 60, 24f);
+		AnimationData boostF = new AnimationData ("boostF", "Boost Forward", 1, 24f);
+
+		AnimationSet animSet = u.GetAnimationSet ();
+		animSet.stand = stand;
+		animSet.boostF = boostF;
 
 		return BuildUnit(u,w1,w2,w3,s1,s2);
 	}

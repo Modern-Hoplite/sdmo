@@ -19,6 +19,8 @@ public class Unit
 	private float speed = 10f;
 	private int hp = 1000;
 
+	private AnimationSet animSet;
+
 	public Unit()
 	{
 		Setup (0, "Undefined", UnitRank.C, new UnitWeapon (), new UnitWeapon (), new UnitWeapon (), new UnitSkill (), new UnitSkill ());
@@ -44,6 +46,8 @@ public class Unit
 		this.weapon3 = weapon3;
 		this.skill1 = skill1;
 		this.skill2 = skill2;
+
+		animSet = new AnimationSet (this);
 	}
 
 	// Transform doesn't do anything for most units but it is here for polymorphism
@@ -77,6 +81,9 @@ public class Unit
 	public virtual void SetSpeed(float speed) { this.speed = speed; } 
 	public virtual int GetHp() { return hp; }
 	public virtual void SetHp(int hp) { this.hp = hp; }
+
+	public virtual AnimationSet GetAnimationSet() { return animSet; }
+	public virtual void SetAnimationSet(AnimationSet aSet) { animSet = aSet; }
 
 	public virtual string GetRessourcePath()
 	{

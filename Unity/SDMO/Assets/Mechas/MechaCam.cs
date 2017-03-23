@@ -96,5 +96,10 @@ public class MechaCam : MonoBehaviour
 		float spBarActualHeight = spBarHeight * (m.sp / m.spMax);
 
 		GUI.Box (new Rect(Screen.width - skillLength - spBarWidth, Screen.height - spBarActualHeight, spBarWidth, spBarActualHeight), "");
+
+
+		float animWidth = 180f, animHeight = 25f;
+		string animName = m.unit.GetAnimationSet().currentAnim.animNameUser;
+		GUI.Box (new Rect (Screen.width - animWidth, 0f, animWidth, animHeight), animName);
 	}
 }

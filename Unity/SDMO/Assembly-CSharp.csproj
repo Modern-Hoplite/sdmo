@@ -50,6 +50,9 @@
      <Compile Include="Assets\Manager\ManagerLocal.cs" />
      <Compile Include="Assets\Manager\ManagerShared.cs" />
      <Compile Include="Assets\Manager\RespawnCam.cs" />
+     <Compile Include="Assets\Mechas\Anim\AnimationData.cs" />
+     <Compile Include="Assets\Mechas\Anim\AnimationEvent.cs" />
+     <Compile Include="Assets\Mechas\Anim\AnimationSet.cs" />
      <Compile Include="Assets\Mechas\AttackData.cs" />
      <Compile Include="Assets\Mechas\Mecha.cs" />
      <Compile Include="Assets\Mechas\MechaCam.cs" />
