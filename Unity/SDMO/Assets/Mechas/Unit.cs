@@ -85,6 +85,11 @@ public class Unit
 	public virtual AnimationSet GetAnimationSet() { return animSet; }
 	public virtual void SetAnimationSet(AnimationSet aSet) { animSet = aSet; }
 
+	public virtual List<AnimationData> GetAnimations()
+	{
+		return GetAnimationSet ().GetAllAnimations ();
+	}
+
 	public virtual string GetRessourcePath()
 	{
 		string path = "units/";

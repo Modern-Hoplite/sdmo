@@ -33,7 +33,9 @@ public class AnimationSet
 		l.Add (menuSelect); l.Add (taunt);
 
 		if (includeUnitAnimations && u != null) {
-			// Add weapon animations
+			l.AddRange(u.GetWeapon1 ().GetAnimations ());
+			l.AddRange (u.GetWeapon2 ().GetAnimations ());
+			l.AddRange (u.GetWeapon3 ().GetAnimations ());
 		}
 
 		return l;
@@ -53,9 +55,11 @@ public class AnimationSet
 	// Returns whether or not the animation has started
 	public bool PlayAnim(AnimationData d)
 	{
-		ForceAnim (d);
-
-		return true;
+		if (d.priority >= currentAnim.minimumPriorityToCancel) {
+			ForceAnim (d);
+			return true;
+		}
+		return false;
 	}
 
 	// Plays said animation imediately, regardless of the previous one

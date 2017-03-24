@@ -12,14 +12,17 @@ public class AnimationData
 	private int currentFrame = 0;
 	private float frameProgress = 0f;
 
+	public int priority = 0, minimumPriorityToCancel = 0;
+
 	public List<AnimationEvent> animEvents = new List<AnimationEvent>();
 
-	public AnimationData(string animNameSystem = "error", string animNameUser = "", int nbFrames = 24, float fps = 24f)
+	public AnimationData(string animNameSystem = "error", string animNameUser = "", int priority = 0, int nbFrames = 24, float fps = 24f)
 	{
 		this.animNameSystem = animNameSystem;
 		this.animNameUser = (animNameUser == "" ? animNameSystem : animNameUser);
 		this.fps = fps;
 		this.nbFrames = nbFrames;
+		this.priority = priority;
 	}
 
 	// Makes the animation ready for use

@@ -22,18 +22,9 @@ public class MechaSub : MonoBehaviour
 			return;
 
 		AnimationSet s = m.unit.GetAnimationSet ();
-		List<AnimationData> l = s.GetAllAnimations ();
+		List<AnimationData> l = m.unit.GetAnimations();
 		AnimationData curAnim = s.currentAnim;
 		if (m.photonView.isMine) {
-
-			AnimationData animToPlay = s.stand;
-
-			if (MechaInput.boosting) {
-				animToPlay = s.boostF;
-			}
-
-			s.PlayAnim (animToPlay);
-
 			animID = l.IndexOf(curAnim);
 		} else {
 			curAnim = l [animID];
@@ -45,6 +36,32 @@ public class MechaSub : MonoBehaviour
 			animSyst.Play (curAnim.animNameSystem);
 		}
 		lastAnim = curAnim;
+	}
+
+	public virtual void CalculateAnimations()
+	{
+		if (!m || !m.photonView.isMine)
+			return;
+		
+		AnimationSet s = m.unit.GetAnimationSet ();
+
+		AnimationData animToPlay = s.stand;
+
+		if (MechaInput.jump)
+			animToPlay = s.jump;
+
+		if (MechaInput.boosting) {
+			if(MechaInput.boostingDirection == Vector2.left)
+				animToPlay = s.boostL;
+			else if(MechaInput.boostingDirection == Vector2.right)
+				animToPlay = s.boostR;
+			else if(MechaInput.boostingDirection == Vector2.down)
+				animToPlay = s.boostB;
+			else
+				animToPlay = s.boostF;
+		}
+
+		s.PlayAnim (animToPlay);
 	}
 
 	public Transform[] GetActiveFirePoints()

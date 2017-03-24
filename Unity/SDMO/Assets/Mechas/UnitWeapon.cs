@@ -15,6 +15,8 @@ public class UnitWeapon
 	private string sfxShot = "beam-sfx";
 	private int burstID = 0;
 
+	private AnimationData animSwitch, animUse;
+
 	public UnitWeapon()
 	{
 		
@@ -36,14 +38,23 @@ public class UnitWeapon
 
 	public virtual AttackData GetAttackData() { return attackData; }
 	public virtual void SetAttackData(AttackData attackData) { this.attackData = attackData; }
+	public virtual AnimationData GetAnimSwitch() { return animSwitch; }
+	public virtual void SetAnimSwitch(AnimationData d) { animSwitch = d; }
+	public virtual AnimationData GetAnimUse() { return animUse; }
+	public virtual void SetAnimUse(AnimationData d) { animUse = d; }
+
+	// Should be called by the player to start using the weapon
+	public virtual bool UseWeapon(Mecha m)
+	{
+		return m.unit.GetAnimationSet ().PlayAnim (animUse);
+	}
 
 	// Should be called to usually fire the weapon
-	public virtual bool UseWeapon(Mecha m)
+	public virtual void Shoot(Mecha m)
 	{
 		Transform firePoint = BurstFirePoints (FirePoints(m));
 
-		Shoot (m, firePoint);
-		return true;
+		FireShot (m, firePoint);
 	}
 
 	protected virtual Transform BurstFirePoints(Transform[] firePoints)
@@ -68,7 +79,7 @@ public class UnitWeapon
 	}
 
 	// The actual shot, bypasses all the logic of ammunition and stuff
-	public virtual void Shoot(Mecha m, Transform firePoint) {
+	public virtual void FireShot(Mecha m, Transform firePoint) {
 		Debug.LogError ("["+m.unit.GetName()+"/"+GetName()+"] UnitWeapon.Shoot() : You should redifine Shoot() if you want this to do anything");
 	}
 
@@ -78,6 +89,15 @@ public class UnitWeapon
 
 	public virtual void SwitchToWeapon(Mecha m)
 	{
-		m.currentWeapon = this;
+		if(m.unit.GetAnimationSet().PlayAnim(GetAnimSwitch()))
+			m.currentWeapon = this;
+	}
+
+	public virtual List<AnimationData> GetAnimations()
+	{
+		List<AnimationData> l = new List<AnimationData> ();
+		l.Add (GetAnimSwitch ());
+		l.Add (GetAnimUse ());
+		return l;
 	}
 }

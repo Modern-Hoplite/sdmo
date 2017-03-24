@@ -46,13 +46,18 @@ public class UnitWeaponComposed : UnitWeapon
 		internalWeapon.SetAttackData (attackData);
 	}
 
-	public override void Shoot (Mecha m, Transform firePoint)
+	public override void FireShot (Mecha m, Transform firePoint)
 	{
-		internalWeapon.Shoot (m, firePoint);
+		internalWeapon.FireShot (m, firePoint);
 	}
 
 	public override bool UseWeapon (Mecha m)
 	{
 		return internalWeapon.UseWeapon (m);
+	}
+
+	public override void Shoot (Mecha m)
+	{
+		internalWeapon.Shoot (m);
 	}
 }

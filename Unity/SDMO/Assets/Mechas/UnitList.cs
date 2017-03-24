@@ -40,14 +40,45 @@ public class UnitList
 
 		w1 = new UnitWeaponMelee ("Melee", new AttackData());
 		w2 = new UnitWeaponHitscan ("Water Launcher", new AttackData());
+
 		w3 = new UnitWeaponHitscan ("Microwave Burst", new AttackData());
 
-		AnimationData stand = new AnimationData ("stand", "Stand", 60, 24f);
-		AnimationData boostF = new AnimationData ("boostF", "Boost Forward", 1, 24f);
-
 		AnimationSet animSet = u.GetAnimationSet ();
-		animSet.stand = stand;
-		animSet.boostF = boostF;
+		animSet.stand = new AnimationData ("stand", "Stand", 0, 60, 24f);
+		animSet.boostF = new AnimationData ("boostF", "Boost Forward", 10, 1, 24f);
+		animSet.boostL = new AnimationData ("boostL", "Boost Left", 10, 1, 24f);
+		animSet.boostR = new AnimationData ("boostR", "Boost Right", 10, 1, 24f);
+		animSet.boostB = new AnimationData ("boostB", "Boost Back", 10, 1, 24f);
+		animSet.jump = new AnimationData ("jump", "Jump", 1, 1, 24f);
+
+		AnimationData w1animSwitch = new AnimationData ("w1switch", "Weapon 1 Switch", 50, 24, 24);
+		AnimationData w1animUse = new AnimationData ("w1use", "Weapon 1 Use", 100, 24, 24);
+		AnimationData w2animSwitch = new AnimationData ("w2switch", "Weapon 2 Switch", 50, 24, 24);
+		AnimationData w2animUse = new AnimationData ("w2use", "Weapon 2 Use", 100, 24, 24);
+		AnimationData w3animSwitch = new AnimationData ("w3switch", "Weapon 3 Switch", 50, 24, 24);
+		AnimationData w3animUse = new AnimationData ("w3use", "Weapon 3 Use", 100, 24, 24);
+
+		w1.SetAnimSwitch (w1animSwitch);
+		w1.SetAnimUse (w1animUse);
+		w2.SetAnimSwitch (w2animSwitch);
+		w2.SetAnimUse (w2animUse);
+		w3.SetAnimSwitch (w3animSwitch);
+		w3.SetAnimUse (w3animUse);
+
+		AnimationData[][] anims = new AnimationData[4][];
+		anims[0] = new AnimationData[]{ animSet.stand, animSet.jump };
+		anims[1] = new AnimationData[]{ animSet.boostF, animSet.boostL, animSet.boostR, animSet.boostB };
+		anims[2] = new AnimationData[]{ w1animSwitch, w2animSwitch, w3animSwitch};
+		anims[3] = new AnimationData[]{w1animUse, w2animUse, w3animUse};
+
+		int[] animsPrio = { 0, 10, 50, 100 }, animsPrioOverride = { 0, 100, 5, 50 };
+
+		for (int j = 0; j < anims.Length; j++) {
+			for (int i = 0; i < anims [j].Length; i++) {
+				anims [j] [i].priority = animsPrio [j];
+				anims [j] [i].minimumPriorityToCancel = animsPrioOverride [j];
+			}
+		}
 
 		return BuildUnit(u,w1,w2,w3,s1,s2);
 	}

@@ -58,6 +58,8 @@
      <Compile Include="Assets\Mechas\MechaCam.cs" />
      <Compile Include="Assets\Mechas\MechaInput.cs" />
      <Compile Include="Assets\Mechas\MechaSub.cs" />
+     <Compile Include="Assets\Mechas\Movement\MechaMovement.cs" />
+     <Compile Include="Assets\Mechas\Movement\MechaMovementDemo.cs" />
      <Compile Include="Assets\Mechas\Skills\UnitSkillAttackUp.cs" />
      <Compile Include="Assets\Mechas\Transform\UnitTransform.cs" />
      <Compile Include="Assets\Mechas\Transform\UnitTransformDeath.cs" />

@@ -163,6 +163,9 @@ public class Mecha : PunBehaviour
 				currentWeapon.UseWeapon (this);
 			}
 
+			// Animations
+			sub.CalculateAnimations();
+
 		} else {
 			// TODO Interpolation/Extrapolation
 		}
@@ -194,6 +197,9 @@ public class Mecha : PunBehaviour
 	public List<UnitSkill> GetActiveSkills()
 	{
 		List<UnitSkill> activeSkills = new List<UnitSkill> ();
+
+		// TODO Add unit skills
+		// TODO Add current weapon Skills
 
 		activeSkills.Add (unit.GetSkill1 ());
 		if(sp >= spMax/2f)

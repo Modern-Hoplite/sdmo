@@ -13,7 +13,7 @@ public class UnitWeaponHitscan : UnitWeapon
 		Constructor (name, attackData);
 	}
 
-	public override void Shoot (Mecha m, Transform firePoint)
+	public override void FireShot (Mecha m, Transform firePoint)
 	{
 		ShotSFX (m, firePoint.position, firePoint.rotation);
 

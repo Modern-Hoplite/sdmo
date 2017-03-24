@@ -29,5 +29,13 @@ public class UnitTransform : Unit
 		return (transformed ? unitTransform.GetName () : unitBase.GetName ());
 	}
 
+	public override List<AnimationData> GetAnimations ()
+	{
+		List<AnimationData> l = new List<AnimationData> ();
+		l.AddRange (unitBase.GetAnimations ());
+		l.AddRange (unitTransform.GetAnimations ());
+		return l;
+	}
+
 	// TODO [...]
 }
