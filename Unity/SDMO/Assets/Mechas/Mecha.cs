@@ -64,6 +64,14 @@ public class Mecha : PunBehaviour
 			usedEnergyThisFrame = false;
 
 
+			// NEW CODE
+			/*
+			ChooseAnim (move control code there)
+			Use anim's mecha movement
+			
+			 */
+
+
 
 			// Movement variables, should be pulled from the units at a later point
 			float verticalMinSpeed = 20f, verticalMaxSpeed = 15f, boostVerticalMinSpeed = 10f,
@@ -165,6 +173,7 @@ public class Mecha : PunBehaviour
 
 			// Animations
 			sub.CalculateAnimations();
+			unit.GetAnimationSet ().ProgressAnim (this, Time.fixedDeltaTime);
 
 		} else {
 			// TODO Interpolation/Extrapolation

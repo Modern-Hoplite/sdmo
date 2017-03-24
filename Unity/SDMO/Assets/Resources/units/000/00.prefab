@@ -9092,7 +9092,7 @@ MonoBehaviour:
   firePoint3:
   - {fileID: 4368546300435658}
   - {fileID: 4932799582970402}
-  tmpAnim: []
+  animSyst: {fileID: 95394233921294406}
 --- !u!137 &137239597751427432
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

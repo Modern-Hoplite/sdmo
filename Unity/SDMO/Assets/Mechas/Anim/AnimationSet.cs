@@ -53,19 +53,25 @@ public class AnimationSet
 
 	// Tries to play an animation
 	// Returns whether or not the animation has started
-	public bool PlayAnim(AnimationData d)
+	public bool PlayAnim(AnimationData d, Mecha m = null)
 	{
-		if (d.priority >= currentAnim.minimumPriorityToCancel) {
-			ForceAnim (d);
+		if (currentAnim.CanBeCancelled(d)) {
+			ForceAnim (d, m);
 			return true;
 		}
 		return false;
 	}
 
 	// Plays said animation imediately, regardless of the previous one
-	public void ForceAnim(AnimationData d)
+	public void ForceAnim(AnimationData d, Mecha m = null)
 	{
-		d.ResetAnim ();
+		d.ResetAnim (m, this);
 		currentAnim = d;
+	}
+
+	// Makes the current animtion progress
+	public void ProgressAnim(Mecha m, float time)
+	{
+		currentAnim.AnimProgress (m, this, time);
 	}
 }

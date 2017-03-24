@@ -77,8 +77,24 @@ public class UnitList
 			for (int i = 0; i < anims [j].Length; i++) {
 				anims [j] [i].priority = animsPrio [j];
 				anims [j] [i].minimumPriorityToCancel = animsPrioOverride [j];
+
+				if (j >= 2)
+					anims [j] [i].AddEventAtEnd (new AnimationEventPlayAnim(animSet.stand));
 			}
 		}
+
+		w2animUse.AddEvent (new AnimationEventShootWeapon(), 10);
+		w3animUse.AddEvent (new AnimationEventShootWeapon(), 10);
+		w3animUse.AddEvent (new AnimationEventShootWeapon(), 12);
+		w3animUse.AddEvent (new AnimationEventShootWeapon(), 14);
+		w3animUse.AddEvent (new AnimationEventShootWeapon(), 16);
+		w3animUse.AddEvent (new AnimationEventShootWeapon(), 18);
+		w3animUse.AddEvent (new AnimationEventShootWeapon(), 20);
+
+		w2animUse.AddEvent (new AnimationEventChangePriorityOverride (1000, 50), 12);
+		w3animUse.AddEvent (new AnimationEventChangePriorityOverride (1000, 50), 22);
+
+
 
 		return BuildUnit(u,w1,w2,w3,s1,s2);
 	}

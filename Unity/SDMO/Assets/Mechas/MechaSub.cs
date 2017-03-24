@@ -61,7 +61,7 @@ public class MechaSub : MonoBehaviour
 				animToPlay = s.boostF;
 		}
 
-		s.PlayAnim (animToPlay);
+		s.PlayAnim (animToPlay, m);
 	}
 
 	public Transform[] GetActiveFirePoints()

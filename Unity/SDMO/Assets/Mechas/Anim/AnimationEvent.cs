@@ -6,7 +6,7 @@ public class AnimationEvent
 {
 	public int frame = 0;
 
-	public virtual void Activate() {}
-	public virtual void BeforeActivation() {}
-	public virtual void AfterActivation() {}
+	public virtual void Activate(Mecha m, AnimationSet s) {}
+	public virtual void BeforeActivation(Mecha m, AnimationSet s) {}
+	public virtual void AfterActivation(Mecha m, AnimationSet s) {}
 }
