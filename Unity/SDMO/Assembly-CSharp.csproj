@@ -52,18 +52,28 @@
      <Compile Include="Assets\Manager\RespawnCam.cs" />
      <Compile Include="Assets\Mechas\Anim\AnimationData.cs" />
      <Compile Include="Assets\Mechas\Anim\AnimationEvent.cs" />
+     <Compile Include="Assets\Mechas\Anim\AnimationListener.cs" />
      <Compile Include="Assets\Mechas\Anim\AnimationSet.cs" />
+     <Compile Include="Assets\Mechas\Anim\Events\AnimationEventChangeMechaMovement.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventChangePriorityOverride.cs" />
+     <Compile Include="Assets\Mechas\Anim\Events\AnimationEventComboSet.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventPlayAnim.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventShootWeapon.cs" />
+     <Compile Include="Assets\Mechas\Anim\Events\AnimationEventShootWeaponRepeat.cs" />
+     <Compile Include="Assets\Mechas\Anim\Listeners\AnimationListenerBoostStop.cs" />
+     <Compile Include="Assets\Mechas\Anim\Listeners\AnimationListenerMCA.cs" />
      <Compile Include="Assets\Mechas\AttackData.cs" />
      <Compile Include="Assets\Mechas\Mecha.cs" />
      <Compile Include="Assets\Mechas\MechaCam.cs" />
      <Compile Include="Assets\Mechas\MechaInput.cs" />
      <Compile Include="Assets\Mechas\MechaSub.cs" />
      <Compile Include="Assets\Mechas\Movement\MechaMovement.cs" />
+     <Compile Include="Assets\Mechas\Movement\MechaMovementBoost.cs" />
      <Compile Include="Assets\Mechas\Movement\MechaMovementDemo.cs" />
      <Compile Include="Assets\Mechas\Movement\MechaMovementGravity.cs" />
+     <Compile Include="Assets\Mechas\Movement\MechaMovementJump.cs" />
+     <Compile Include="Assets\Mechas\Movement\MechaMovementVertical.cs" />
+     <Compile Include="Assets\Mechas\Movement\MechaMovementWalk.cs" />
      <Compile Include="Assets\Mechas\Skills\UnitSkillAttackUp.cs" />
      <Compile Include="Assets\Mechas\Transform\UnitTransform.cs" />
      <Compile Include="Assets\Mechas\Transform\UnitTransformDeath.cs" />
@@ -187,10 +197,10 @@
  <HintPath>C:/P/Dev/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>D:/GameDev/[[CURRENTDEV]]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/Photon3Unity3D.dll</HintPath>
+ <HintPath>D:/GameDev/[CURRENT]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="websocket-sharp">
- <HintPath>D:/GameDev/[[CURRENTDEV]]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/WebSocket/websocket-sharp.dll</HintPath>
+ <HintPath>D:/GameDev/[CURRENT]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

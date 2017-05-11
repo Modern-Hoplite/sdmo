@@ -18,6 +18,9 @@ public class ManagerLocal : PunBehaviour
 
 	public GameObject respawnCam;
 
+	private List<Mecha> mechaList = new List<Mecha>();
+
+
 	public void Awake()
 	{
 		i = this;
@@ -58,6 +61,41 @@ public class ManagerLocal : PunBehaviour
 			s += "(" + p.ID + ") " + p.NickName;
 			GUI.Box (new Rect (0, height * i, 200, height), s);
 			i++;
+		}
+	}
+
+	// Returns the mecha list (some can not exist anymore)
+	public List<Mecha> GetMechaList()
+	{
+		return mechaList;
+	}
+
+	// Returns the mecha list (after removing non existant mecha, is slower)
+	public List<Mecha> GetMechaListTrim()
+	{
+		MechaListTrim ();
+		return GetMechaList ();
+	}
+
+	// Adds a mecha to the list (and removes not existing ones)
+	public void MechaRegister(Mecha m)
+	{
+		mechaList.Add (m);
+		MechaListTrim ();
+	}
+
+	// Removes non existing mechs from the list
+	public void MechaListTrim()
+	{
+		List<Mecha> toRemove = new List<Mecha> ();
+
+		foreach (Mecha mech in mechaList){
+			if (!mech)
+				toRemove.Add (mech);
+		}
+
+		foreach (Mecha mech in toRemove) {
+			mechaList.Remove (mech);
 		}
 	}
 }

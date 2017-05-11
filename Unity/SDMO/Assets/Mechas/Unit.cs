@@ -21,6 +21,8 @@ public class Unit
 
 	private AnimationSet animSet;
 
+	private MechaMovement baseMechaMovement;
+
 	public Unit()
 	{
 		Setup (0, "Undefined", UnitRank.C, new UnitWeapon (), new UnitWeapon (), new UnitWeapon (), new UnitSkill (), new UnitSkill ());
@@ -46,6 +48,8 @@ public class Unit
 		this.weapon3 = weapon3;
 		this.skill1 = skill1;
 		this.skill2 = skill2;
+
+		baseMechaMovement = new MechaMovement ();
 
 		animSet = new AnimationSet (this);
 	}
@@ -84,6 +88,9 @@ public class Unit
 
 	public virtual AnimationSet GetAnimationSet() { return animSet; }
 	public virtual void SetAnimationSet(AnimationSet aSet) { animSet = aSet; }
+
+	public virtual MechaMovement GetBaseMechaMovement() { return baseMechaMovement; }
+	public virtual void SetBaseMechaMovement(MechaMovement m) { baseMechaMovement = m; }
 
 	public virtual List<AnimationData> GetAnimations()
 	{

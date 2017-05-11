@@ -27,4 +27,12 @@ public class MechaMovement
 
 		return mov;
 	}
+
+	public override string ToString()
+	{
+		string s = "";
+		if (content != null)
+			s = content.ToString ();
+		return "(" + s + ")";
+	}
 }

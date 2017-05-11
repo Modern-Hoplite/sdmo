@@ -13,14 +13,14 @@ public class AnimationEventPlayAnim : AnimationEvent
 		this.forceAnim = force;
 	}
 
-	public override void Activate (Mecha m, AnimationSet s)
+	public override void Activate (Mecha m, AnimationSet s, int curFrame)
 	{
 		if (s == null)
 			return;
 
 		if (forceAnim)
-			s.ForceAnim (anim);
+			s.ForceAnim (anim, m);
 		else
-			s.PlayAnim (anim);
+			s.PlayAnim (anim, m);
 	}
 }

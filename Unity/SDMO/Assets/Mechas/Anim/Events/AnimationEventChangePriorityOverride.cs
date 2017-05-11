@@ -12,18 +12,18 @@ public class AnimationEventChangePriorityOverride : AnimationEvent
 		this.priorityAfter = priorityAfter;
 	}
 
-	public override void BeforeActivation (Mecha m, AnimationSet s)
+	public override void BeforeActivation (Mecha m, AnimationSet s, int curFrame)
 	{
 		s.currentAnim.minimumPriorityToCancel = priorityBefore;
 	}
 
-	public override void AfterActivation (Mecha m, AnimationSet s)
+	public override void AfterActivation (Mecha m, AnimationSet s, int curFrame)
 	{
 		s.currentAnim.minimumPriorityToCancel = priorityAfter;
 	}
 
-	public override void Activate (Mecha m, AnimationSet s)
+	public override void Activate (Mecha m, AnimationSet s, int curFrame)
 	{
-		AfterActivation (m, s);
+		AfterActivation (m, s, curFrame);
 	}
 }

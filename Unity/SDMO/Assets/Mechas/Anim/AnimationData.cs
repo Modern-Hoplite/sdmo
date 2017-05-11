@@ -15,6 +15,7 @@ public class AnimationData
 	public int priority = 0, minimumPriorityToCancel = 0;
 
 	public List<AnimationEvent> animEvents = new List<AnimationEvent>();
+	public List<AnimationListener> animListeners = new List<AnimationListener> ();
 
 	public AnimationData(string animNameSystem = "error", string animNameUser = "", int priority = 0, int nbFrames = 24, float fps = 24f)
 	{
@@ -31,6 +32,9 @@ public class AnimationData
 		currentFrame = 0;
 		frameProgress = 0f;
 
+		foreach (AnimationListener l in animListeners)
+			l.OnAnimReset (m, s);
+
 		FramePass (m, s, 0);
 	}
 
@@ -38,6 +42,10 @@ public class AnimationData
 	public virtual void AnimProgress(Mecha m, AnimationSet s, float time)
 	{
 		frameProgress += time * fps;
+
+		foreach (AnimationListener l in animListeners) {
+			l.OnAnimProgress (m, s, time);
+		}
 
 		while (frameProgress >= 1f) {
 			frameProgress -= 1f;
@@ -49,15 +57,19 @@ public class AnimationData
 	// Called when going to frame [frame], to execute events
 	public virtual void FramePass(Mecha m, AnimationSet s, int frame)
 	{
+		foreach (AnimationListener l in animListeners) {
+			l.OnFramePass (m, s, frame);
+		}
+
 		foreach (AnimationEvent e in animEvents) {
 			int eventFrame = e.frame;
 
 			if (frame == eventFrame)
-				e.Activate (m, s);
+				e.Activate (m, s, frame);
 			else if (frame < eventFrame)
-				e.BeforeActivation (m,s);
+				e.BeforeActivation (m,s, frame);
 			else
-				e.AfterActivation (m,s);
+				e.AfterActivation (m,s, frame);
 		}
 	}
 
@@ -72,9 +84,19 @@ public class AnimationData
 	}
 
 
-	public bool CanBeCancelled(AnimationData challenger)
+	public bool CanBeCancelled(Mecha m, AnimationSet s, AnimationData challenger)
 	{
-		return challenger.priority >= minimumPriorityToCancel;
+		bool priorityCheck = challenger.priority >= minimumPriorityToCancel;
+		bool resign = priorityCheck;
+
+		foreach (AnimationListener l in animListeners) {
+			bool listenOut = true;
+			if (l.OnTryToPlayAnimation (m, s, challenger, out listenOut, resign)) {
+				resign = listenOut;
+			}
+		}
+
+		return resign;
 	}
 
 
@@ -87,6 +109,12 @@ public class AnimationData
 	public void AddEventAtEnd(AnimationEvent e)
 	{
 		AddEvent (e, nbFrames);
+	}
+
+
+	public void AddListener(AnimationListener l)
+	{
+		animListeners.Add (l);
 	}
 }
 

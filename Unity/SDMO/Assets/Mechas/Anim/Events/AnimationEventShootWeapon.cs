@@ -12,7 +12,12 @@ public class AnimationEventShootWeapon : AnimationEvent
 		weapon = w;
 	}
 
-	public override void Activate (Mecha m, AnimationSet s)
+	public override void Activate (Mecha m, AnimationSet s, int curFrame)
+	{
+		Action (m);
+	}
+
+	public void Action(Mecha m)
 	{
 		UnitWeapon w = weapon;
 		if (weapon == null)

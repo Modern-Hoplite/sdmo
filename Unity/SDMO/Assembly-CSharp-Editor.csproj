@@ -118,13 +118,13 @@
  <HintPath>C:/P/Dev/Unity/Editor/Data/UnityExtensions/Unity/UnityVR/RuntimeEditor/UnityEngine.VR.dll</HintPath>
  </Reference>
  <Reference Include="Newtonsoft.Json">
- <HintPath>D:/GameDev/[[CURRENTDEV]]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Editor/PhotonNetwork/Newtonsoft.Json.dll</HintPath>
+ <HintPath>D:/GameDev/[CURRENT]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Editor/PhotonNetwork/Newtonsoft.Json.dll</HintPath>
  </Reference>
  <Reference Include="Photon3Unity3D">
- <HintPath>D:/GameDev/[[CURRENTDEV]]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/Photon3Unity3D.dll</HintPath>
+ <HintPath>D:/GameDev/[CURRENT]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/Photon3Unity3D.dll</HintPath>
  </Reference>
  <Reference Include="websocket-sharp">
- <HintPath>D:/GameDev/[[CURRENTDEV]]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/WebSocket/websocket-sharp.dll</HintPath>
+ <HintPath>D:/GameDev/[CURRENT]/SDMO/sdmo/Unity/SDMO/Assets/Photon Unity Networking/Plugins/WebSocket/websocket-sharp.dll</HintPath>
  </Reference>
  <Reference Include="UnityEditor.Graphs">
  <HintPath>C:/P/Dev/Unity/Editor/Data/Managed/UnityEditor.Graphs.dll</HintPath>

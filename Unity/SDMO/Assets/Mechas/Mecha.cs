@@ -29,6 +29,8 @@ public class Mecha : PunBehaviour
 	[HideInInspector]
 	public float backBoostRemainingTime = 0f;
 
+	public MechaMovement mMovement;
+
 	private bool deadRobot = false;
 
 	public void Awake()
@@ -46,6 +48,9 @@ public class Mecha : PunBehaviour
 		charC = GetComponent<CharacterController> ();
 
 		currentWeapon = unit.GetWeapon2 ();
+		mMovement = unit.GetBaseMechaMovement ();
+
+		ManagerLocal.i.MechaRegister (this);
 	}
 
 	public void Update()
@@ -60,100 +65,21 @@ public class Mecha : PunBehaviour
 		float deltaTime = Time.fixedDeltaTime;
 
 		if (photonView.isMine) {
-			Vector3 inputMov = Vector3.right * MechaInput.movement.x + Vector3.forward * MechaInput.movement.y;
+			//Vector3 inputMov = Vector3.right * MechaInput.movement.x + Vector3.forward * MechaInput.movement.y;
 			usedEnergyThisFrame = false;
 
+			// Basic animations
+			AnimationSet s = unit.GetAnimationSet ();
+			s.PlayAnim (ChooseAnim(s), this);
 
-			// NEW CODE
-			/*
-			ChooseAnim (move control code there)
-			Use anim's mecha movement
-			
-			 */
-
-
-
-			// Movement variables, should be pulled from the units at a later point
-			float verticalMinSpeed = 20f, verticalMaxSpeed = 15f, boostVerticalMinSpeed = 10f,
-				boostSideVerticalMinSpeed = 12f, boostBackVerticalMinSpeed = 6f;
-			float speedWalk = 8f, speedBoost = 20f, speedBoostSide = 18f;
-			float jumpSpeed = 30f, gravity = 45f;
-			float energyJump = 20f, energyBoost = 30f, energyBoostSide = 25f;
-			float speedBoostBack = 80f, energyBoostBack = 20f, boostBackTime = 0.4f;
-
-
-
-			// Normal movement
-			Vector3 movement = Vector3.zero;
-			movement = transform.TransformDirection (inputMov) * speedWalk;
-
-			verticalMinSpeed = (charC.isGrounded ? 0.0f : -verticalMinSpeed);
-
-			if (MechaInput.boosting) {
-				if (MechaInput.boostingDirection.y > 0f && UseEnergy (energyBoost * deltaTime)) { // FORWARD BOOST
-					Vector3 boostDir = aimDirectionHor + Vector3.up * Mathf.Max (0.0f, aimDirection.y);
-					boostDir.Normalize ();
-					if (MechaInput.jump) {
-						boostDir += Vector3.up;
-						boostDir.Normalize ();
-					}
-					movement = boostDir * speedBoost;
-					verticalMinSpeed = Mathf.Max (verticalMinSpeed, -boostVerticalMinSpeed);
-				} else if (MechaInput.boostingDirection.x != 0f && UseEnergy (energyBoostSide * deltaTime)) { // SIDEWAYS BOOST
-					Vector3 boostDir = transform.TransformDirection(MechaInput.boostingDirection);
-					if (MechaInput.jump) {
-						boostDir += Vector3.up;
-						boostDir.Normalize ();
-					}
-					movement = boostDir * speedBoostSide;
-					verticalMinSpeed = Mathf.Max (verticalMinSpeed, -boostSideVerticalMinSpeed);
-				} else if (MechaInput.boostingDirection.y < 0f && backBoostRemainingTime <= 0f && UseEnergy (energyBoostBack)) { // BACKWARDS BOOST
-					backBoostRemainingTime = boostBackTime;
-				} else
-					MechaInput.boosting = false;
-			} else
-				MechaInput.boosting = false;
-
-			// Back boost overrides movement for a time
-			if (backBoostRemainingTime > 0f) {
-				backBoostRemainingTime -= deltaTime;
-				verticalMinSpeed = Mathf.Max (verticalMinSpeed, -boostBackVerticalMinSpeed);
-				movement = -aimDirectionHor * speedBoostBack;
-				usedEnergyThisFrame = true;
-
-				if (backBoostRemainingTime > 0f) {
-					MechaInput.boosting = true;
-					MechaInput.boostingDirection = Vector2.down;
-				} else {
-					MechaInput.boosting = false;
-				}
-			}
-
-			// Jumping
-			if (!MechaInput.boosting && MechaInput.jump && UseEnergy (energyJump * deltaTime)) {
-				vSpeed += jumpSpeed * deltaTime;
-			} else {
-				vSpeed -= gravity * deltaTime;
-				MechaInput.jump = (MechaInput.boosting ? MechaInput.jump : false);
-			}
-
-
-
-			// Vertical movement adjust and actual movement
-			vSpeed += movement.y;
-			movement -= Vector3.up * movement.y;
-			vSpeed = Mathf.Clamp (vSpeed, verticalMinSpeed, verticalMaxSpeed);
-			movement += Vector3.up * vSpeed;
+			// Movement
+			Vector3 movement = mMovement.Movement (this, Vector3.zero);
 			charC.Move (movement * deltaTime);
-
-
 
 			// Energy regen
 			if (!usedEnergyThisFrame)
 				energy += energyRegen * deltaTime;
 			energy = Mathf.Clamp (energy, 0.0f, energyMax);
-
-
 
 			// Weapons
 			if (MechaInput.switchWeapon1)
@@ -172,12 +98,39 @@ public class Mecha : PunBehaviour
 			}
 
 			// Animations
-			sub.CalculateAnimations();
 			unit.GetAnimationSet ().ProgressAnim (this, Time.fixedDeltaTime);
 
 		} else {
 			// TODO Interpolation/Extrapolation
 		}
+	}
+
+	private AnimationData ChooseAnim(AnimationSet s)
+	{
+		AnimationData animToPlay = s.stand;
+		float energyJump = 20f, energyBoost = 30f, energyBoostSide = 25f, energyBoostBack = 20f;
+		float deltaTime = Time.fixedDeltaTime;
+
+		if (MechaInput.boosting) {
+			if (MechaInput.boostingDirection.y > 0f && UseEnergy (energyBoost * deltaTime)) { // FORWARD BOOST
+				animToPlay = s.boostF;
+			} else if (MechaInput.boostingDirection.x != 0f && UseEnergy (energyBoostSide * deltaTime)) { // SIDEWAYS BOOST
+				animToPlay = (MechaInput.boostingDirection.x < 0f ? s.boostL : s.boostR);
+			} else if (MechaInput.boostingDirection.y < 0f && UseEnergy (energyBoostBack * deltaTime)) { // BACKWARDS BOOST
+				animToPlay = s.boostB;
+			} else
+				MechaInput.boosting = false;
+		} else
+			MechaInput.boosting = false;
+
+		// Jumping
+		if (!MechaInput.boosting && MechaInput.jump && UseEnergy (energyJump * deltaTime)) {
+			animToPlay = s.jump;
+		} else {
+			MechaInput.jump = (MechaInput.boosting ? MechaInput.jump : false);
+		}
+
+		return animToPlay;
 	}
 
 	// Returns true and uses energy if you have enough energy
@@ -268,6 +221,41 @@ public class Mecha : PunBehaviour
 		deadRobot = true;
 		ManagerLocal.i.MakeRespawnCam ();
 		PhotonNetwork.Destroy (photonView);
+	}
+
+	// Returns Mecha nearest to the crosshair within the scan parameters
+	public Mecha GetAutolock(Vector3 targetDir)
+	{
+		float maxAngle = 45f;
+		float maxDistance = 5000f;
+
+		float maxDistanceSqr = maxDistance * maxDistance;
+		float maxAngleCos = Mathf.Cos (maxAngle);
+
+		Mecha target = null;
+		float lastTargetScore = -100f;
+
+		foreach (Mecha m in ManagerLocal.i.GetMechaList()) {
+			if (!m || m == this)
+				continue;
+
+			Vector3 posR = m.transform.position - transform.position;
+
+			if (posR.sqrMagnitude > maxDistanceSqr)
+				continue;
+
+			float dot = Vector3.Dot(targetDir, posR.normalized);
+
+			if (dot < maxAngleCos)
+				continue;
+
+			if (dot > lastTargetScore) {
+				lastTargetScore = dot;
+				target = m;
+			}
+		}
+
+		return target;
 	}
 
 	// Called by UnitWeapon of another client

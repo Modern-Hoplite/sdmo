@@ -19,11 +19,27 @@ public class MechaCam : MonoBehaviour
 			return;
 		}
 
-		viewX = (viewX + MechaInput.aim.x) % 360f;
-		viewY = Mathf.Clamp (viewY + MechaInput.aim.y, -80f, 80f);
+		Vector3 aimDir;
+		Mecha autolock = null;
+		if (MechaInput.autolock) {
+			aimDir = GetAimDir (viewX, viewY);
+			autolock = m.GetAutolock (aimDir);
+		}
+		
+		if (autolock == null) {
+			viewX = (viewX + MechaInput.aim.x) % 360f;
+			viewY = Mathf.Clamp (viewY + MechaInput.aim.y, -80f, 80f);
 
-		Vector3 aimDir = GetAimDir(viewX, viewY);
-		transform.LookAt (transform.position + aimDir);
+			aimDir = GetAimDir(viewX, viewY);
+			transform.LookAt (transform.position + aimDir);
+		} else {
+			transform.LookAt (autolock.transform.position + Vector3.up);
+			aimDir = transform.TransformDirection (Vector3.forward);
+			SetViewXYFromAimDir (aimDir);
+			// TODO Better autolock
+
+		}
+
 		m.aimDirection = aimDir;
 
 		Vector3 targetPos = m.transform.position;
@@ -51,6 +67,15 @@ public class MechaCam : MonoBehaviour
 		aimDir += Vector3.up * Mathf.Sin (y * Mathf.Deg2Rad);
 
 		return aimDir;
+	}
+
+	public void SetViewXYFromAimDir(Vector3 aimDir)
+	{
+		viewX = Mathf.Acos (aimDir.x) * Mathf.Rad2Deg;
+		if(aimDir.z < 0f)
+			viewX *= -1f;
+
+		viewY = Mathf.Asin (aimDir.y) * Mathf.Rad2Deg;
 	}
 
 	public void OnGUI()
@@ -98,8 +123,9 @@ public class MechaCam : MonoBehaviour
 		GUI.Box (new Rect(Screen.width - skillLength - spBarWidth, Screen.height - spBarActualHeight, spBarWidth, spBarActualHeight), "");
 
 
-		float animWidth = 180f, animHeight = 25f;
+		float animWidth = 325f, animHeight = 25f;
 		string animName = m.unit.GetAnimationSet().currentAnim.animNameUser;
 		GUI.Box (new Rect (Screen.width - animWidth, 0f, animWidth, animHeight), animName);
+		GUI.Box (new Rect (Screen.width - animWidth, animHeight, animWidth, animHeight), m.mMovement.ToString());
 	}
 }

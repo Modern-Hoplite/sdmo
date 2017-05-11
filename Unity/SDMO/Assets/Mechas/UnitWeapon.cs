@@ -9,8 +9,8 @@ public class UnitWeapon
 {
 	private string name = "Gun";
 	private AttackData attackData = new AttackData();
-	private int burst = 1;	// How many shots per use
-	private float burstInterval = 0.1f; // Interval between shots
+	//private int burst = 1;	// How many shots per use
+	//private float burstInterval = 0.1f; // Interval between shots
 
 	private string sfxShot = "beam-sfx";
 	private int burstID = 0;
@@ -46,7 +46,7 @@ public class UnitWeapon
 	// Should be called by the player to start using the weapon
 	public virtual bool UseWeapon(Mecha m)
 	{
-		return m.unit.GetAnimationSet ().PlayAnim (animUse);
+		return m.unit.GetAnimationSet ().PlayAnim (GetAnimUse(), m);
 	}
 
 	// Should be called to usually fire the weapon
@@ -96,7 +96,21 @@ public class UnitWeapon
 	public virtual List<AnimationData> GetAnimations()
 	{
 		List<AnimationData> l = new List<AnimationData> ();
+		l.AddRange (GetAnimationsSwitch ());
+		l.AddRange (GetAnimationsUse ());
+		return l;
+	}
+
+	public virtual List<AnimationData> GetAnimationsSwitch()
+	{
+		List<AnimationData> l = new List<AnimationData> ();
 		l.Add (GetAnimSwitch ());
+		return l;
+	}
+
+	public virtual List<AnimationData> GetAnimationsUse()
+	{
+		List<AnimationData> l = new List<AnimationData> ();
 		l.Add (GetAnimUse ());
 		return l;
 	}

@@ -12,7 +12,7 @@ using UnityEngine;
 public class MechaInput
 {
 	public static Vector2 movement, aim, boostingDirection;
-	public static bool shoot, jump, boosting, descend,
+	public static bool shoot, jump, boosting, descend, autolock,
 	switchWeapon1, switchWeapon2, switchWeapon3;
 
 	private static float timeSinceMovement = 10f, boostDoubletap = 0.2f, boostDoubletapMaxAngle = 30f;
@@ -68,6 +68,8 @@ public class MechaInput
 		switchWeapon1 = Input.GetKeyDown (KeyCode.Alpha1) || Input.GetKeyDown(KeyCode.Mouse2);
 		switchWeapon2 = Input.GetKeyDown (KeyCode.Alpha2) || Input.GetKeyDown(KeyCode.Mouse4);
 		switchWeapon3 = Input.GetKeyDown (KeyCode.Alpha3) || Input.GetKeyDown(KeyCode.Mouse3);
+
+		autolock = Input.GetKey (KeyCode.Mouse1);
 
 		timeSinceMovement += deltaTime;
 	}

@@ -8,7 +8,7 @@ using UnityEngine;
  * Currently incomplete
  */
 public class UnitParser
-{
+{/* commented to clear up the console of warnings
 	private int lineNumber = 0;
 	private UnitRank unitRank = UnitRank.B;
 	private int unitID = 0;
@@ -223,5 +223,5 @@ public class UnitParser
 			i = 1;
 		}
 		return i;
-	}
+	}*/
 }

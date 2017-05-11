@@ -16,6 +16,8 @@ public class MechaSub : MonoBehaviour
 	private int animID;
 	private AnimationData lastAnim = null;
 
+	private Vector3 previousPosition = Vector3.zero;
+
 	public void Update()
 	{
 		if (!m)
@@ -26,42 +28,25 @@ public class MechaSub : MonoBehaviour
 		AnimationData curAnim = s.currentAnim;
 		if (m.photonView.isMine) {
 			animID = l.IndexOf(curAnim);
+
+			animSyst.SetFloat ("InputX", MechaInput.movement.x);
+			animSyst.SetFloat ("InputY", MechaInput.movement.y);
 		} else {
 			curAnim = l [animID];
+			Vector3 posDiff = transform.position - previousPosition;
+			Vector3 posDiffT = transform.TransformDirection (posDiff);
+			Vector3 posDiffTHor = new Vector3 (posDiffT.x, 0f, posDiffT.z);
+			posDiffTHor.Normalize ();
+			animSyst.SetFloat ("InputX", posDiffTHor.x);
+			animSyst.SetFloat ("InputY", posDiffTHor.z);
 		}
 
-		return; // TEMP To check the internal system
+		//return; // TEMP To check the internal system
 
 		if (lastAnim != curAnim) {
 			animSyst.Play (curAnim.animNameSystem);
 		}
 		lastAnim = curAnim;
-	}
-
-	public virtual void CalculateAnimations()
-	{
-		if (!m || !m.photonView.isMine)
-			return;
-		
-		AnimationSet s = m.unit.GetAnimationSet ();
-
-		AnimationData animToPlay = s.stand;
-
-		if (MechaInput.jump)
-			animToPlay = s.jump;
-
-		if (MechaInput.boosting) {
-			if(MechaInput.boostingDirection == Vector2.left)
-				animToPlay = s.boostL;
-			else if(MechaInput.boostingDirection == Vector2.right)
-				animToPlay = s.boostR;
-			else if(MechaInput.boostingDirection == Vector2.down)
-				animToPlay = s.boostB;
-			else
-				animToPlay = s.boostF;
-		}
-
-		s.PlayAnim (animToPlay, m);
 	}
 
 	public Transform[] GetActiveFirePoints()
@@ -106,5 +91,6 @@ public class MechaSub : MonoBehaviour
 	public void PhotonRecieve(PhotonStream stream, PhotonMessageInfo info)
 	{
 		animID = (int)stream.ReceiveNext ();
+		previousPosition = transform.position;
 	}
 }

@@ -15,8 +15,13 @@ public class MechaMovementGravity : MechaMovement
 	{
 		mov = base.Movement (m, mov);
 
-		mov += Vector3.down * gravity * Time.fixedDeltaTime;
+		mov += Vector3.down * gravity;
 
 		return mov;
+	}
+
+	public override string ToString ()
+	{
+		return "Gravity[" + gravity + "] " + base.ToString ();
 	}
 }
