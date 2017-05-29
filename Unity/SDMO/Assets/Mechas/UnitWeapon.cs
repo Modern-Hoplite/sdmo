@@ -89,8 +89,7 @@ public class UnitWeapon
 
 	public virtual void SwitchToWeapon(Mecha m)
 	{
-		if(m.unit.GetAnimationSet().PlayAnim(GetAnimSwitch()))
-			m.currentWeapon = this;
+		m.unit.GetAnimationSet ().PlayAnim (GetAnimSwitch (), m);
 	}
 
 	public virtual List<AnimationData> GetAnimations()

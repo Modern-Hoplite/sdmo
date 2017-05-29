@@ -56,7 +56,9 @@
      <Compile Include="Assets\Mechas\Anim\AnimationSet.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventChangeMechaMovement.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventChangePriorityOverride.cs" />
+     <Compile Include="Assets\Mechas\Anim\Events\AnimationEventChangeWeapon.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventComboSet.cs" />
+     <Compile Include="Assets\Mechas\Anim\Events\AnimationEventMeleeDash.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventPlayAnim.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventShootWeapon.cs" />
      <Compile Include="Assets\Mechas\Anim\Events\AnimationEventShootWeaponRepeat.cs" />

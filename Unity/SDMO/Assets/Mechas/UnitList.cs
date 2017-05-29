@@ -59,12 +59,14 @@ public class UnitList
 		AnimationData w3animSwitch = new AnimationData ("w3switch", "Weapon 3 Switch", 50, 24, 24);
 		AnimationData w3animUse = new AnimationData ("w3use", "Weapon 3 Use", 100, 24, 24);
 
+		AnimationData w1animDash = new AnimationData ("boostF", "Weapon 1 Dash", 100, 500, 24);
 		AnimationData w1animCombo1 = new AnimationData ("w1c1", "Weapon 1 Combo 1", 100, 500, 24);
 		AnimationData w1animCombo2 = new AnimationData ("w1c2", "Weapon 1 Combo 2", 100, 500, 24);
 		AnimationData w1animCombo3 = new AnimationData ("w1c3", "Weapon 1 Combo 3", 100, 500, 24);
 		AnimationData w1animCombo4 = new AnimationData ("w1c4", "Weapon 1 Combo 4", 100, 500, 24);
 		AnimationData w1animCombo5 = new AnimationData ("w1c5", "Weapon 1 Combo 5", 100, 500, 24);
 
+		w1.AddComboAnim (w1animDash);
 		w1.AddComboAnim (w1animCombo1);
 		w1.AddComboAnim (w1animCombo2);
 		w1.AddComboAnim (w1animCombo3);
@@ -80,12 +82,16 @@ public class UnitList
 		w3.SetAnimSwitch (w3animSwitch);
 		w3.SetAnimUse (w3animUse);
 
+		w1animSwitch.AddEvent (new AnimationEventChangeWeapon (w1));
+		w2animSwitch.AddEvent (new AnimationEventChangeWeapon (w2));
+		w3animSwitch.AddEvent (new AnimationEventChangeWeapon (w3));
+
 		AnimationData[][] anims = new AnimationData[5][];
 		anims[0] = new AnimationData[]{ animSet.stand, animSet.jump };
 		anims[1] = new AnimationData[]{ animSet.boostF, animSet.boostL, animSet.boostR, animSet.boostB };
 		anims[2] = new AnimationData[]{ w1animSwitch, w2animSwitch, w3animSwitch};
 		anims[3] = new AnimationData[]{ w2animUse, w3animUse};
-		anims[4] = new AnimationData[]{ w1animCombo1, w1animCombo2, w1animCombo3, w1animCombo4, w1animCombo5 };
+		anims[4] = new AnimationData[]{ w1animDash, w1animCombo1, w1animCombo2, w1animCombo3, w1animCombo4, w1animCombo5 };
 
 		int[] animsPrio = { 0, 10, 50, 100, 100 }, animsPrioOverride = { 0, 100, 5, 50, 10000 };
 
@@ -148,8 +154,10 @@ public class UnitList
 		animSet.boostB.AddEvent (new AnimationEventChangeMechaMovement (mmfBoostB));
 
 
+		w1animDash.AddEvent(new AnimationEventComboSet(w1, 1));
+		w1animDash.AddEvent (new AnimationEventMeleeDash (mmfBoostF, 2f, 30f), 1);
 		// Melee stuff
-		for (int i = 0; i < anims [4].Length; i++) {
+		for (int i = 1; i < anims [4].Length; i++) {
 			AnimationData ad = anims [4] [i];
 			ad.AddEvent (new AnimationEventShootWeaponRepeat (null, 19), 7); 
 			ad.AddEvent (new AnimationEventChangeMechaMovement (mmLock));
